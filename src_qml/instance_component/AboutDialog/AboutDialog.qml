@@ -7,15 +7,12 @@ import "../../common_component/MaterialUI"
 import "../../common_js/StringUtil.js" as Strings
 import "../../common_js/Color.js" as Color
 
-Popup {
+MDialog {
     id: aboutPopup
     width: 600
     height: 200
     padding: 20
-    visible: false
-    modal: true
-    focus: true
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutsideParent
+    transitionComponent: MFade {}
 
     ColumnLayout {
         anchors.fill: parent
@@ -50,7 +47,7 @@ Popup {
             }
         }
 
-        Rectangle {
+        RowLayout {
             Layout.topMargin: 20
             ColumnLayout.fillWidth: true
             ColumnLayout.fillHeight: true
@@ -58,7 +55,7 @@ Popup {
             MTypography {
                 anchors.fill: parent
                 wrapMode: Text.WrapAnywhere
-                text: qsTr('MathType工具')
+                text: qsTr('m3u8下载工具')
             }
         }
 
@@ -75,7 +72,7 @@ Popup {
             topPadding: 10
             ColumnLayout.fillWidth: true
             horizontalAlignment: Text.AlignRight
-            text: qsTr('Copyright © 2022')
+            text: qsTr('Copyright © 2023')
             color: Color.text_secondary
             variant: 'caption'
         }

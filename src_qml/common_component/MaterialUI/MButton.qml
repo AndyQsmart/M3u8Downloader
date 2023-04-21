@@ -13,6 +13,8 @@ MButtonBase {
     property bool disableElevation: false
     property string variant: 'text' // contained、outlined、text、default: text
 
+    implicitWidth: 64
+
     property var m_padding: {
         let ans = [Palatte.unit, Palatte.unit*2, Palatte.unit, Palatte.unit*2]
 

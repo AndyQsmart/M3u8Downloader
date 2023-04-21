@@ -1,0 +1,2 @@
+width/height是实际占用的大小
+implicitWidth/implicitHeight是内容的大小

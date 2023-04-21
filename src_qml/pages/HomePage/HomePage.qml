@@ -56,6 +56,7 @@ Pane {
         }
 
         Rectangle {
+            id: right_area
             RowLayout.fillHeight: true
             RowLayout.fillWidth: true
 
@@ -68,48 +69,18 @@ Pane {
                     Layout.margins: 10
                     ColumnLayout.fillWidth: true
 
-                    MFileButton {
+                    MButton {
                         variant: 'outlined'
-                        text: qsTr("选择文件")
+                        text: qsTr("新建")
                         color: Color.text_secondary
-                        onChange: function(file_list) {
-                            onSelectFile(file_list[0])
-                        }
-                        ToolTip.text: qsTr("选择Word文件")
+                        ToolTip.text: qsTr("新建下载任务")
                         ToolTip.visible: hovered
                         ToolTip.timeout: 3000
                         ToolTip.delay: 0
                     }
 
-                    // MButton {
-                    //     variant: 'outlined'
-                    //     text: qsTr("测试")
-                    //     color: Color.text_secondary
-                    //     onClicked: {
-                    //        WordTools.test()
-                    //     }
-                    // }
-
                     Rectangle {
                         RowLayout.fillWidth: true
-                    }
-
-                    MSelect {
-                        id: out_select
-                        model: ['输出到文件', '直接显示结果']
-                    }
-
-                    MSelect {
-                        id: out_select2
-                        variant: 'outlined'
-                        color: 'primary'
-                        model: ['输出到文件', '直接显示结果']
-                    }
-
-                    MSelect {
-                        id: out_select3
-                        variant: 'filled'
-                        model: ['输出到文件', '直接显示结果']
                     }
                 }
 
@@ -121,69 +92,65 @@ Pane {
                     ColumnLayout.fillWidth: true
                     ColumnLayout.fillHeight: true
                     clip: true
+                    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
+                    contentWidth: availableWidth
+                    leftPadding: 10
+                    topPadding: 10
+                    rightPadding: 10
+                    bottomPadding: 10
 
                     ColumnLayout {
-                        anchors.fill: parent
+//                        ColumnLayout.fillWidth: true
+                        width: right_area.width
                         spacing: 0
 
-                        MTypography {
-                            variant: 'h1'
-                            text: 'h1. Heading'
+                        MLinearProgress {
+                            width: 300
                         }
-                        MTypography {
-                            variant: 'h2'
-                            text: 'h2. Heading'
+                        Rectangle {
+                            height: 20
                         }
-                        MTypography {
-                            variant: 'h3'
-                            text: 'h3. Heading'
+
+                        MLinearProgress {
+                            width: 300
+                            variant: 'determinate'
+                            value: 0.5
+                            //variant: 'buffer'
+                            //valueBuffer: 0.7
                         }
-                        MTypography {
-                            variant: 'h4'
-                            text: 'h4. Heading'
+
+                        Rectangle {
+                            height: 20
                         }
-                        MTypography {
-                            variant: 'h5'
-                            text: 'h5. Heading'
+                        MLinearProgress {
+                            width: 300
+                            value: 0.5
+                            variant: 'buffer'
+                            valueBuffer: 0.7
                         }
-                        MTypography {
-                            variant: 'h6'
-                            text: 'h6. Heading'
+
+
+                        MButton {
+                            text: '打开'
+                            onClicked: {
+                                theDialog.open()
+                            }
                         }
-                        MTypography {
-                            variant: 'subtitle1'
-                            text: 'subtitle1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur'
-                        }
-                        MTypography {
-                            variant: 'subtitle2'
-                            text: 'subtitle2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur'
-                        }
-                        MTypography {
-                            variant: 'body1'
-                            text: 'body1. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.'
-                        }
-                        MTypography {
-                            variant: 'body2'
-                            text: 'body2. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos blanditiis tenetur unde suscipit, quam beatae rerum inventore consectetur, neque doloribus, cupiditate numquam dignissimos laborum fugiat deleniti? Eum quasi quidem quibusdam.'
-                        }
-                        MTypography {
-                            variant: 'button'
-                            text: 'BUTTON TEXT'
-                        }
-                        MTypography {
-                            variant: 'caption'
-                            text: 'caption text'
-                        }
-                        MTypography {
-                            variant: 'overline'
-                            text: 'OVERLINE TEXT'
-                        }
-//                        Rectangle {
-//                            RowLayout.fillHeight: true
-//                        }
                     }
                 }
             }
+        }
+    }
+
+    MDialog {
+        id: theDialog
+        width: 200
+        height: 200
+        transitionComponent: MFade {
+        }
+
+        MTypography {
+            text: '测试'
         }
     }
 

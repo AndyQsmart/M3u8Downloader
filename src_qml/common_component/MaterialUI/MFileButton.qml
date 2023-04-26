@@ -3,6 +3,7 @@ import QtQuick.Dialogs 1.2
 
 MButton {
     id: button
+    property string title: qsTr('请选择文件') // 窗口标题
     property bool multiple: false
     property string accept: ''
 
@@ -14,6 +15,7 @@ MButton {
 
     FileDialog {
         id: file_dialog
+        title: button.title
         selectMultiple: multiple
         nameFilters: {
             let ans = []

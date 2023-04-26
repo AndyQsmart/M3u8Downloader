@@ -10,37 +10,10 @@ import "../../common_js/Color.js" as Color
 import "../../common_js/Tools.js" as Tools
 
 Pane {
-    // property var task_list: []
-    // property int current_menu_index: -1
-
     id: container
     x: 0
     y: 0
     padding: 0
-
-    function onSelectFile(file_path) {
-        if (out_select.currentIndex == 0) {
-            let file_dir = FileTools.getFileDir(file_path)
-            let file_name = FileTools.getFileName(file_path)
-            let file_name_list = file_name.split('.')
-            let out_file_name = ''
-            if (file_name_list.length > 1) {
-                file_name_list[file_name_list.length-2] += '_latex'
-                out_file_name = file_name_list.join('.')
-            }
-            else {
-                out_file_name = file_name+'_latex'
-            }
-
-            WordTools.processWordFileToSaveFile(file_path, FileTools.joinPath(file_dir, out_file_name))
-            toast.success(`公式转换成功，请查看${out_file_name}文件`)
-        }
-        else {
-            let ans_str = WordTools.processWordFile(file_path)
-            console.log(ans_str)
-            direct_out_view.showText(ans_str)
-        }
-    }
 
     Component.onCompleted: {
         // requestList()
@@ -77,6 +50,10 @@ Pane {
                         ToolTip.visible: hovered
                         ToolTip.timeout: 3000
                         ToolTip.delay: 0
+
+                        onClicked: {
+                            create_dialog.open()
+                        }
                     }
 
                     Rectangle {
@@ -88,70 +65,121 @@ Pane {
                     ColumnLayout.fillWidth: true
                 }
 
-                ScrollView {
-                    ColumnLayout.fillWidth: true
-                    ColumnLayout.fillHeight: true
-                    clip: true
-                    ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-                    contentWidth: availableWidth
-                    leftPadding: 10
-                    topPadding: 10
-                    rightPadding: 10
-                    bottomPadding: 10
+                RowLayout {
+                    MOverflowYBox {
+                        RowLayout.fillWidth: true
+                        RowLayout.fillHeight: true
+                        padding: 10
 
-                    ColumnLayout {
-//                        ColumnLayout.fillWidth: true
-                        width: right_area.width
-                        spacing: 0
+                        ColumnLayout {
+                            //                        ColumnLayout.fillWidth: true
+                            width: right_area.width
+                            spacing: 0
 
-                        MLinearProgress {
-                            width: 300
-                        }
-                        Rectangle {
-                            height: 20
-                        }
+                            MLinearProgress {
+                                width: 300
+                            }
+                            Rectangle {
+                                height: 20
+                            }
 
-                        MLinearProgress {
-                            width: 300
-                            variant: 'determinate'
-                            value: 0.5
-                            //variant: 'buffer'
-                            //valueBuffer: 0.7
-                        }
+                            MChip {
+                                //                            size: 'small'
+                                clickable: true
+                                label: '测试1'
+                                onClicked: {
+                                    console.log('click')
+                                }
+                                deletable: true
+                                onDeleted: {
+                                    console.log('ondelete1')
+                                }
+                            }
 
-                        Rectangle {
-                            height: 20
-                        }
-                        MLinearProgress {
-                            width: 300
-                            value: 0.5
-                            variant: 'buffer'
-                            valueBuffer: 0.7
-                        }
+                            Rectangle {
+                                height: 20
+                            }
 
+                            MChip {
+                                color: 'primary'
+                                label: '测试1'
+                                deleteIcon: Rectangle {
+                                    border.width: 1
+                                    border.color: 'red'
+                                    width: 18
+                                    height: 18
+                                    radius: 12
 
-                        MButton {
-                            text: '打开'
-                            onClicked: {
-                                theDialog.open()
+                                    MIcon {
+                                        anchors.centerIn: parent
+                                        name: 'download'
+                                    }
+                                }
+                                deletable: true
+                                onDeleted: {
+                                    console.log('ondelete1')
+                                }
+                            }
+
+                            Rectangle {
+                                height: 20
+                            }
+
+                            MChip {
+                                variant: 'outlined'
+                                color: 'primary'
+                                label: '测试1'
+                                //                            size: 'small'
+                                avatar: Rectangle {
+                                    border.width: 1
+                                    border.color: 'red'
+                                    width: 18
+                                    height: 18
+                                    radius: 12
+
+                                    MIcon {
+                                        anchors.centerIn: parent
+                                        name: 'download'
+                                    }
+                                }
+                            }
+
+                            Rectangle {
+                                height: 20
+                            }
+
+                            MChip {
+                                size: 'small'
+                                variant: 'outlined'
+                                label: '测试1'
+                            }
+
+                            MButton {
+                                text: '打开'
+                                onClicked: {
+                                    theDialog.open()
+                                }
                             }
                         }
+                    }
+                    Rectangle {
+                        width: 1
+                        RowLayout.fillHeight: true
+                        color: '#dddddd'
+                    }
+
+                    MOverflowYBox {
+                        width: 350
+                        RowLayout.fillHeight: true
+                        padding: 10
                     }
                 }
             }
         }
     }
 
-    MDialog {
-        id: theDialog
-        width: 200
-        height: 200
-        transitionComponent: MFade {
-        }
-
-        MTypography {
-            text: '测试'
-        }
+    CreateDialog {
+        id: create_dialog
     }
 
     MToast {

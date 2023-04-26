@@ -7,7 +7,7 @@ import "./styles"
 MButton {
     id: list_item
     // button模式下，传给button
-//    property string color: Palatte.lightTextPrimary
+//    property string color: Palette.lightTextPrimary
 
     property string alignItems: 'center' // 'flex-start' 'center'
     property bool dense: false
@@ -20,13 +20,13 @@ MButton {
     disableRipple: !button
 
     property var m_padding: {
-        let ans = [Palatte.unit, 0, Palatte.unit, 0]
+        let ans = [Palette.unit, 0, Palette.unit, 0]
 
         if (dense) {
-            ans = [Palatte.unit/2, 0, Palatte.unit/2, 0]
+            ans = [Palette.unit/2, 0, Palette.unit/2, 0]
         }
         if (!disableGutters) {
-            ans[1] = ans[3] = Palatte.unit*2
+            ans[1] = ans[3] = Palette.unit*2
         }
         return ans
     }
@@ -38,7 +38,7 @@ MButton {
     background: Rectangle {
         color: {
             if (list_item.selected) {
-                return Palatte.lightActionSelected
+                return Palette.lightActionSelected
             }
 
             if (button && list_item.hovered) {
@@ -54,7 +54,7 @@ MButton {
             anchors.left: parent.left
             anchors.right: parent.right
             height: 1
-            color: Palatte.lightTextDivider
+            color: Palette.lightTextDivider
         }
     }
 }

@@ -15,17 +15,17 @@ ComboBox {
 //    popup.height: 400
 
     property var m_padding: {
-        let ans = [6, Palatte.unit*3, 7, 0]
+        let ans = [6, Palette.unit*3, 7, 0]
         switch (variant) {
             case 'filled': {
-                // ans = [27, Palatte.unit*4, 19, 16]
-                // ans = [19, Palatte.unit*4, 19, 12]
-                ans = [Palatte.unit+3, Palatte.unit*4, Palatte.unit+3, 12]
+                // ans = [27, Palette.unit*4, 19, 16]
+                // ans = [19, Palette.unit*4, 19, 12]
+                ans = [Palette.unit+3, Palette.unit*4, Palette.unit+3, 12]
                 break
             }
             case 'outlined': {
-                // ans = [18.5, Palatte.unit*4, 18.5, 12]
-                ans = [Palatte.unit+3, Palatte.unit*2, Palatte.unit+3, Palatte.unit*2]
+                // ans = [18.5, Palette.unit*4, 18.5, 12]
+                ans = [Palette.unit+3, Palette.unit*2, Palette.unit+3, Palette.unit*2]
                 break
             }
         }
@@ -80,11 +80,11 @@ ComboBox {
 
         border.color: {
             if (disabled) {
-                return Palatte.lightActionDisabled
+                return Palette.lightActionDisabled
             }
 
             if (select.activeFocus) {
-                return Palatte.string2Color(select.color, null)
+                return Palette.string2Color(select.color, null)
             }
             else {
                 return Colors.alpha('#000000', 0.87)
@@ -143,7 +143,7 @@ ComboBox {
                 height: select.activeFocus ? 2 : 1
                 anchors.bottom: parent.bottom
                 enabled: false
-                color: select.activeFocus ? Palatte.string2Color(select.color, null) : '#3B000000'
+                color: select.activeFocus ? Palette.string2Color(select.color, null) : '#3B000000'
             }
         }
     }

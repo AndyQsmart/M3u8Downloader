@@ -6,7 +6,7 @@ TextInput {
     property string variant: 'standard' // 'filled' | 'outlined' | 'standard'
     property string color: 'primary'
     property string placeholder: ''
-    property string _main_color: Palatte.string2Color('primary', Palatte.primaryMain)
+    property string _main_color: Palette.string2Color('primary', Palette.primaryMain)
     property var _padding: {
         if (variant === 'outlined') {
             return [10, 10, 10, 10]
@@ -37,6 +37,7 @@ TextInput {
             radius: 5
             border.width: textInput.activeFocus ? 2 : 1
             border.color: textInput.activeFocus ? textInput._main_color : '#3B000000'
+            color: Colors.commonTransparent
         }
     }
 
@@ -68,7 +69,7 @@ TextInput {
             }
         }
         text: placeholder
-        color: Palatte.lightTextSecondary
+        color: Palette.lightTextSecondary
         font.pointSize: TypographyStyle.fontStyleList.body2.size
     }
 

@@ -17,7 +17,7 @@ ProgressBar {
         id: bg
         width: control.width
         height: control.height
-        color: Colors.alpha(control.color == 'secondary' ? Palatte.secondaryMain : Palatte.primaryMain, 0.38)
+        color: Colors.alpha(control.color == 'secondary' ? Palette.secondaryMain : Palette.primaryMain, 0.38)
 
         Rectangle {
             visible: control.variant == 'buffer'
@@ -65,7 +65,7 @@ ProgressBar {
                 }
             }
             height: parent.height
-            color: control.color == 'secondary' ? Palatte.secondaryMain : Palatte.primaryMain
+            color: control.color == 'secondary' ? Palette.secondaryMain : Palette.primaryMain
 
             NumberAnimation {
                 target: progress

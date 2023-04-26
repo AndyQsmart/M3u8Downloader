@@ -9,6 +9,7 @@ Popup {
     id: dialog
     property bool fullScreen: false
     property bool fullWidth: false
+    property bool disableBackdropClick: false
     property string maxWidth: 'sm' //'lg' 'md' 'sm' 'xl' 'xs' false
     property Item transitionComponent: null
 
@@ -18,7 +19,7 @@ Popup {
     visible: false
     modal: true
     focus: true
-    closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+    closePolicy: disableBackdropClick ? Popup.CloseOnEscape : (Popup.CloseOnEscape | Popup.CloseOnPressOutside)
 
     background: MPaper {
         elevation: 24
@@ -28,11 +29,17 @@ Popup {
         if (transitionComponent) {
             return transitionComponent.enter
         }
+        else {
+            return null
+        }
     }
 
     exit: {
         if (transitionComponent) {
             return transitionComponent.exit
+        }
+        else {
+            return null
         }
     }
 }

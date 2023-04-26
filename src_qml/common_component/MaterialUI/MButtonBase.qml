@@ -14,6 +14,7 @@ Button {
     // property bool centerRipple: false
     property bool disableRipple: false
     property string textColor: ''
+    property int fontSize: 14 // 新增字体大小
     property bool disableCursor: false // 新增鼠标属性
 
     enabled: !button.disabled
@@ -24,6 +25,7 @@ Button {
         align: 'center'
         // 字体不居中特殊处理
         lineHeight: 1
+        font.pointSize: button.fontSize
         topPadding: (TypographyStyle.fontStyleList.button.line_height-1)*TypographyStyle.fontStyleList.button.size/2
         bottomPadding: (TypographyStyle.fontStyleList.button.line_height-1)*TypographyStyle.fontStyleList.button.size/2
         // 字体不居中特殊处理

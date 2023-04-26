@@ -53,7 +53,6 @@ MDialog {
             ColumnLayout.fillHeight: true
 
             MTypography {
-                anchors.fill: parent
                 wrapMode: Text.WrapAnywhere
                 text: qsTr('m3u8下载工具')
             }
@@ -64,7 +63,7 @@ MDialog {
             ColumnLayout.fillWidth: true
             horizontalAlignment: Text.AlignRight
             text: qsTr('版本号：ver'+Strings.VERSION)
-            color: Color.text_secondary
+            textColor: 'textSecondary'
             variant: 'caption'
         }
 
@@ -73,7 +72,7 @@ MDialog {
             ColumnLayout.fillWidth: true
             horizontalAlignment: Text.AlignRight
             text: qsTr('Copyright © 2023')
-            color: Color.text_secondary
+            textColor: 'textSecondary'
             variant: 'caption'
         }
     }

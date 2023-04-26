@@ -15,7 +15,7 @@ Rectangle {
     height: children[1].height
     radius: 5
     border.width: textInput.activeFocus ? 2 : 1
-    border.color: textInput.activeFocus ? Palatte.primaryMain : '#3B000000'
+    border.color: textInput.activeFocus ? Palette.primaryMain : '#3B000000'
 
     function prefixZero(num, length) {
         return ('' + num).length < length ? ((new Array(length + 1)).join('0') + num).slice(-length) : '' + num;
@@ -68,7 +68,7 @@ Rectangle {
             Icon {
                 name: 'calendar'
                 size: 16
-                color: Palatte.lightTextSecondary
+                color: Palette.lightTextSecondary
             }
 
             onClicked: {

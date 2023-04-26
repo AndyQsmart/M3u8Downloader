@@ -13,9 +13,9 @@ Column {
         if (disablePadding) {
             return 0
         }
-        let ans = Palatte.unit
+        let ans = Palette.unit
         if (dense) {
-            ans = Palatte.unit
+            ans = Palette.unit
         }
         return ans
     }

@@ -55,10 +55,10 @@ Text {
     // gutterBottom和paragraph下面的边距效果
     bottomPadding: {
         if (gutterBottom) {
-            return Palatte.unit
+            return Palette.unit
         }
         else if (paragraph) {
-            return 2*Palatte.unit
+            return 2*Palette.unit
         }
         else {
             return 0
@@ -72,7 +72,7 @@ Text {
             case 'textPrimary':
             case 'textSecondary':
             case 'error':
-                return Palatte.string2Color(textColor)
+                return Palette.string2Color(textColor)
             default:
                 return Colors.commonBlack
         }

@@ -12,7 +12,7 @@ Slider {
 
     property string color: 'primary' // 'primary' 'secondary'
 
-    property int _handleSize: 12 // 新增鼠标属性
+    property int _handleSize: 12
 
     background: Rectangle {
         x: control.leftPadding
@@ -22,12 +22,12 @@ Slider {
         width: control.availableWidth
         height: implicitHeight
         radius: 2
-        color: Colors.alpha(color == 'secondary' ? Palatte.secondaryMain : Palatte.primaryMain, 0.38)
+        color: Colors.alpha(color == 'secondary' ? Palette.secondaryMain : Palette.primaryMain, 0.38)
 
         Rectangle {
             width: control.visualPosition * parent.width
             height: parent.height
-            color: color == 'secondary' ? Palatte.secondaryMain : Palatte.primaryMain
+            color: color == 'secondary' ? Palette.secondaryMain : Palette.primaryMain
             radius: 2
         }
     }
@@ -39,7 +39,7 @@ Slider {
         implicitWidth: _handleSize
         implicitHeight: _handleSize
         radius: _handleSize / 2
-        color: color == 'secondary' ? Palatte.secondaryMain : Palatte.primaryMain
+        color: color == 'secondary' ? Palette.secondaryMain : Palette.primaryMain
 
         Rectangle {
             id: outer
@@ -55,7 +55,7 @@ Slider {
                 }
             }
             height: width
-            color: Colors.alpha(color == 'secondary' ? Palatte.secondaryMain : Palatte.primaryMain, 0.12)
+            color: Colors.alpha(color == 'secondary' ? Palette.secondaryMain : Palette.primaryMain, 0.12)
             radius: width/2
 
             Behavior on width {

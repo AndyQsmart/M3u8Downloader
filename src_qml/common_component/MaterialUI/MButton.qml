@@ -13,10 +13,22 @@ MButtonBase {
     property bool disableElevation: false
     property string variant: 'text' // contained、outlined、text、default: text
 
-    implicitWidth: 64
+//    implicitWidth: 64
+
+    fontSize: {
+        if (size == 'small') {
+            return 13
+        }
+        else if (size == 'large') {
+            return 15
+        }
+        else {
+            return 14
+        }
+    }
 
     property var m_padding: {
-        let ans = [Palatte.unit, Palatte.unit*2, Palatte.unit, Palatte.unit*2]
+        let ans = [Palette.unit, Palette.unit*2, Palette.unit, Palette.unit*2]
 
         switch (variant) {
             case 'contained': {
@@ -71,7 +83,7 @@ MButtonBase {
 
     textColor: {
         if (disabled) {
-            return Palatte.lightActionDisabled
+            return Palette.lightActionDisabled
         }
 
         switch (variant) {
@@ -79,10 +91,10 @@ MButtonBase {
                 return color === 'primary' || color === 'secondary' ? Colors.commonWhite : Colors.commonBlack
             }
             case 'outlined': {
-                return Palatte.string2Color(color, Colors.commonBlack)
+                return Palette.string2Color(color, Colors.commonBlack)
             }
             default: {
-                return Palatte.string2Color(color, Colors.commonBlack)
+                return Palette.string2Color(color, Colors.commonBlack)
             }
         }
     }
@@ -96,10 +108,10 @@ MButtonBase {
         }
         border.color: {
             if (disabled) {
-                return Palatte.lightActionDisabled
+                return Palette.lightActionDisabled
             }
 
-            let ans_color = Palatte.string2Color(button.color, null)
+            let ans_color = Palette.string2Color(button.color, null)
             if (ans_color) {
                 return Colors.alpha(ans_color, 0.5)
             }
@@ -115,22 +127,22 @@ MButtonBase {
                 ans = Colors.alpha('#000000', 0.04)
                 switch (variant) {
                     case 'contained': {
-                        ans = Palatte.string2ColorDark(button.color, Grey.a100)
+                        ans = Palette.string2ColorDark(button.color, Grey.a100)
                         break
                     }
                     case 'outlined': {
-                        ans = Colors.alpha(Palatte.string2Color(button.color, '#000000'), 0.04)
+                        ans = Colors.alpha(Palette.string2Color(button.color, '#000000'), 0.04)
                         break
                     }
                     default: {
-                        ans = Colors.alpha(Palatte.string2Color(button.color, '#000000'), 0.04)
+                        ans = Colors.alpha(Palette.string2Color(button.color, '#000000'), 0.04)
                     }
                 }
             }
             else {
                 switch (variant) {
                     case 'contained': {
-                        ans = button.color ? Palatte.string2Color(button.color, Grey._300) : Grey._300
+                        ans = button.color ? Palette.string2Color(button.color, Grey._300) : Grey._300
                         break
                     }
                     case 'outlined': {

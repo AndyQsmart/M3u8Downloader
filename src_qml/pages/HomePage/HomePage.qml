@@ -99,9 +99,9 @@ Pane {
     }
 
     Component.onCompleted: {
-        for (let i = 0 ; i < 140; i++) {
-            download_list.append({})
-        }
+//        for (let i = 0 ; i < 140; i++) {
+//            download_list.append({})
+//        }
 
         // requestList()
         QtSignal.registerCallback(QtSignal.signalCmd.M3U8_DOWNLOAD_FINISHED, onM3u8DownloadFinished)

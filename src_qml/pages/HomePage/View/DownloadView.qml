@@ -131,6 +131,20 @@ Rectangle {
                         text: start_pause_menu.pause ? "开始" : "暂停"
                     }
                 }
+
+                onClicked: {
+                    let item = listModel.get(currentMenuIndex)
+                    let task_id = item.task_id
+                    if (pause) {
+                        console.log("DownloadItem.unpause task:", task_id)
+                        DownloadM3u8.unpauseAria2Task(task_id)
+                    }
+                    else {
+                        console.log("DownloadItem.pause task:", task_id)
+                        DownloadM3u8.pauseAria2Task(task_id)
+                    }
+                    right_menu.close()
+                }
             }
             MMenuItem {
                 Layout.fillWidth: true

@@ -9,22 +9,14 @@ QT += network
 
 # aria2
 win32 {
-    PRE_TARGETDEPS += $$PWD/lib/ffmpeg/lib/libavcodec.dll.a \
-        $$PWD/lib/ffmpeg/lib/libavdevice.dll.a \
-        $$PWD/lib/ffmpeg/lib/libavfilter.dll.a \
-        $$PWD/lib/ffmpeg/lib/libavformat.dll.a \
-        $$PWD/lib/ffmpeg/lib/libavutil.dll.a \
-        $$PWD/lib/ffmpeg/lib/libswresample.dll.a \
-        $$PWD/lib/ffmpeg/lib/libswscale.dll.a
-
-    LIBS += -L$$PWD/lib/ffmpeg/lib/ \
-        -llibavcodec.dll \
-        -llibavdevice.dll \
-        -llibavfilter.dll \
-        -llibavformat.dll \
-        -llibavutil.dll \
-        -llibswresample.dll \
-        -llibswscale.dll
+    INCLUDEPATH += $$PWD/lib/aria2/include
+    # DEPENDPATH += $$PWD/lib/aria2/lib/mac
+    contains(QT_ARCH, x86_64) {
+        LIBS += -L$$PWD/lib/aria2/lib/win/ -laria2
+    }
+    else {
+        LIBS += -L$$PWD/lib/aria2/lib/win/ -laria2
+    }
 }
 
 macx {

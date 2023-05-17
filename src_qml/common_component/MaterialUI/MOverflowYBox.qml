@@ -6,5 +6,5 @@ import "./styles"
 ScrollView {
     clip: true
     ScrollBar.horizontal.policy: ScrollBar.AlwaysOff
-    contentWidth: availableWidth
+    // contentWidth: availableWidth
 }

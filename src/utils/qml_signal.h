@@ -5,8 +5,10 @@
 #include <QVariant>
 
 enum QMLSignalCMD {
-    REFRESH_MEDIA_STREAM_INFO = 1,
-    AUDIO_AVG_DATA = 2,
+    M3U8_DOWNLOAD_FINISHED = 1,
+    ARIA2_DOWNLOAD_STATE = 2,
+    ARIA2_DOWNLOAD_PAUSE = 3,
+    ARIA2_DOWNLOAD_UNPAUSE = 4,
 };
 
 class QMLSignal : public QObject {

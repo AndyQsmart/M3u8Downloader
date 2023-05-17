@@ -8,7 +8,7 @@ var text_secondary = '#8590a5' // 原：rgba(0, 0, 0, 0.54)
 // transparent7_primary: 'rgba(33, 150, 243, 0.7)',
 // dark_primary: '#1c76d2',
 var gray = 'gray'
-// dark_gray: '#646464',
+var dark_gray = '#646464'
 // light_gray: '#f7f7f7',
 var white = 'white'
 // transparent_white: 'rgba(255, 255, 255, 0.5)',

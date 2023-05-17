@@ -6,7 +6,7 @@ import Qt.labs.platform 1.1
 import "./common_js/Color.js" as Color
 import "./common_component/Route"
 import "./common_component/MaterialUI"
-import "./common_component/Signal/PythonSignal"
+import "./common_component/Signal/QtSignal"
 import "./instance_component/SQLTable/SettingData"
 import "./instance_component/SystemTray"
 import "./pages/HomePage"
@@ -21,8 +21,8 @@ Window {
     visible: true
     title: qsTr("m3u8下载器")
 
-    function onPythonSignal(cmd, data) {
-        PythonSignal.runCallback(cmd, data)
+    function onQtSignal(cmd, data) {
+        QtSignal.runCallback(cmd, data)
 //        console.log(cmd)
 //        console.log(JSON.stringify(data))
     }
@@ -49,6 +49,7 @@ Window {
         initialItem: home_page
 
         Component.onCompleted: {
+            QMLSignal.qmlSignal.connect(onQtSignal)
             SettingData.getValue('RouteStack', function(value) {
                 console.log("(main.qml)Recover route", JSON.stringify(value))
                 if (!value || value.length === 0) {

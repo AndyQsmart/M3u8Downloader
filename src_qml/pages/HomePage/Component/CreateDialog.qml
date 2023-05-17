@@ -127,7 +127,8 @@ MDialog {
                 text: '下载'
 
                 onClicked: {
-                    DownloadM3u8.download(download_link.text, save_path.text, save_file.text)
+                    DownloadM3u8.download("1", download_link.text, save_path.text, save_file.text)
+                    createPopup.close()
                 }
             }
         }

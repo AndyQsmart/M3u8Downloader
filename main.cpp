@@ -3,7 +3,8 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 #include <QFont>
-#include "src/m3u8/download_m3u8.h"
+#include "src/download_m3u8.h"
+#include "src/utils/qml_signal.h"
 
 int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -13,7 +14,6 @@ int main(int argc, char *argv[]) {
 #endif
 
     QGuiApplication app(argc, argv);
-    // QQuickStyle::setStyle("Material");
     QFont defualt_font;
     defualt_font.setFamily("Arial");
     app.setFont(defualt_font);
@@ -24,13 +24,8 @@ int main(int argc, char *argv[]) {
     // m3u8下载
     DownloadM3u8 download_m3u8;
     engine.rootContext()->setContextProperty("DownloadM3u8", &download_m3u8);
-//    // 图片传递相关
-//    ImageTools image_tools;
-//    engine.rootContext()->setContextProperty("ImageTools", &image_tools);
-//    ImageProvider image_provider;
-//    engine.addImageProvider(QString("image_provider"), &image_provider);
     // 信号相关
-//    engine.rootContext()->setContextProperty("QMLSignal", QMLSignal::instance());
+    engine.rootContext()->setContextProperty("QMLSignal", QMLSignal::instance());
 
     const QUrl url(QStringLiteral("qrc:/src_qml/main.qml"));
     QObject::connect(

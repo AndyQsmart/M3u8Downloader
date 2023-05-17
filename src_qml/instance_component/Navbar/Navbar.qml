@@ -69,7 +69,7 @@ Pane {
 
                 RowLayout {
                     anchors.fill: parent
-                    anchors.leftMargin: parent.rightPadding
+                    anchors.leftMargin: parent.leftPadding
                     anchors.rightMargin: parent.rightPadding
 
                     MIcon {

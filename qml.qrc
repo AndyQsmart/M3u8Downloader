@@ -3,8 +3,8 @@
         <file>src_qml/main.qml</file>
         <file>src_qml/common_component/Route/qmldir</file>
         <file>src_qml/common_component/Route/Route.qml</file>
-        <file>src_qml/common_component/Signal/PythonSignal/PythonSignal.qml</file>
-        <file>src_qml/common_component/Signal/PythonSignal/qmldir</file>
+        <file>src_qml/common_component/Signal/QtSignal/QtSignal.qml</file>
+        <file>src_qml/common_component/Signal/QtSignal/qmldir</file>
         <file>src_qml/common_component/SQL/QSQL/persistence.js</file>
         <file>src_qml/common_component/SQL/QSQL/persistence.store.sql.js</file>
         <file>src_qml/common_component/SQL/QSQL/qmldir</file>
@@ -82,5 +82,15 @@
         <file>src_qml/pages/HomePage/Component/CreateDialog.qml</file>
         <file>src_qml/common_component/MaterialUI/styles/MShadow.qml</file>
         <file>src_qml/common_component/MaterialUI/styles/Palette.qml</file>
+        <file>src_qml/pages/HomePage/Component/DownloadItem.qml</file>
+        <file>src_qml/pages/HomePage/Component/DownloadInfo.qml</file>
+        <file>src_qml/pages/HomePage/View/DownloadView.qml</file>
+        <file>src_qml/pages/HomePage/View/HistoryView.qml</file>
+        <file>src_qml/pages/HomePage/View/DeleteView.qml</file>
+        <file>src_qml/pages/HomePage/Component/DownloadInfoFileItem.qml</file>
+        <file>src_qml/common_component/MaterialUI/MPopover.qml</file>
+        <file>src_qml/common_component/MaterialUI/MGrow.qml</file>
+        <file>src_qml/common_component/MaterialUI/MMenu.qml</file>
+        <file>src_qml/common_component/MaterialUI/MMenuItem.qml</file>
     </qresource>
 </RCC>

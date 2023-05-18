@@ -4,6 +4,7 @@ QT += gui
 QT += core
 QT += multimedia
 QT += network
+QT += sql
 
 #LIBS += -lgdi32 -ldwmapi
 
@@ -21,7 +22,7 @@ win32 {
 
 macx {
     INCLUDEPATH += $$PWD/lib/aria2/include
-    # DEPENDPATH += $$PWD/lib/aria2/lib/mac
+    # PRE_TARGETDEPS += $$PWD/lib/aria2/lib/mac/libaria2.dylib
     LIBS += -L$$PWD/lib/aria2/lib/mac/ -laria2.0
 }
 

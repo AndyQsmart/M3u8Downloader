@@ -1,6 +1,7 @@
 #include "model.h"
 #include "parser.h"
 #include "protocol.h"
+#include <cmath>
 #include <QDebug>
 
 Key *find_key(QMap<QString, QVariant> keydata, QList<Key *> keylist) {

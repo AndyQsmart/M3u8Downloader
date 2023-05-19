@@ -19,6 +19,9 @@ void Aria2Task::run() {
         if (result != 1) {
             break;
         }
+        if (this->stoped) {
+            break;
+        }
         if (this->paused) {
             break;
         }
@@ -111,10 +114,21 @@ Aria2Task::Aria2Task(QString task_id, QString file_path, QString file_name, QStr
     this->ts_list = ts_list;
     this->run_mutex = new QMutex();
     this->initAria2Session();
+    connect(this, &Aria2Task::finished, this, &Aria2Task::onFinishedCallback);
 }
 
 Aria2Task::~Aria2Task() {
     delete this->run_mutex;
+}
+
+void Aria2Task::onFinishedCallback() {
+    emit onDownloadStop(this->task_id);
+}
+
+QString Aria2Task::getTempSaveFolder() {
+    QString save_folder = this->file_path[this->file_path.length()-1] == "/" ? "%1%2_ts" : "%1/%2_ts";
+    save_folder = save_folder.arg(this->file_path, this->file_name);
+    return save_folder;
 }
 
 void Aria2Task::initAria2Session() {
@@ -127,8 +141,7 @@ void Aria2Task::initAria2Session() {
     session = aria2::sessionNew(aria2::KeyVals(), config);
 
     // Add download item to session
-    QString save_folder = this->file_path[this->file_path.length()-1] == "/" ? "%1%2_ts" : "%1/%2_ts";
-    save_folder = save_folder.arg(this->file_path, this->file_name);
+    QString save_folder = this->getTempSaveFolder();
     for (int i = 0; i < this->ts_list.size(); i++) {
         std::vector<std::string> uris = {
             this->ts_list[i].toStdString()

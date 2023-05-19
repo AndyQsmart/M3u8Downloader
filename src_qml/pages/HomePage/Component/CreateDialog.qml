@@ -11,6 +11,7 @@ MDialog {
 //    height: 200
     padding: 20
     transitionComponent: MFade {}
+    property var tryDownload
 
     onOpened: {
         if (!save_file.text) {
@@ -127,8 +128,7 @@ MDialog {
                 text: '下载'
 
                 onClicked: {
-                    DownloadM3u8.download("1", download_link.text, save_path.text, save_file.text)
-                    createPopup.close()
+                    tryDownload(download_link.text, save_path.text, save_file.text)
                 }
             }
         }

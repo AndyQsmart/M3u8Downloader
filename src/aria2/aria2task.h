@@ -37,11 +37,16 @@ public:
     aria2::Session *getSession();
     bool hasGid(const aria2::A2Gid gid);
     int downloadEventCallback(aria2::Session* session, aria2::DownloadEvent event, const aria2::A2Gid gid, void* userData);
+    QString getTempSaveFolder();
 
 signals:
     void onDownloadState(QString task_id, QVariant data);
     void onDownloadPause(QString task_id);
     void onDownloadUnpause(QString task_id);
+    void onDownloadStop(QString task_id);
+
+public slots:
+    void onFinishedCallback();
 };
 
 #endif // ARIA2TASK_H

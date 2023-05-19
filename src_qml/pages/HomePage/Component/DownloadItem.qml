@@ -12,13 +12,14 @@ MListItem {
     property bool is_select: false
     property var onLeftClick
     property var onRightClick
-    property string task_id: download_data.task_id ? download_data.task_id : ""
-    property bool pause: download_data.pause ? true : false
-    property int downloadSpeed: download_data.downloadSpeed ? download_data.downloadSpeed : 0
-    property int uploadSpeed: download_data.uploadSpeed ? download_data.uploadSpeed : 0
-    property int numActive: download_data.numActive ? download_data.numActive : 0
-    property int numWaiting: download_data.numWaiting ? download_data.numWaiting : 0
-    property int numStopped: download_data.numStopped ? download_data.numStopped : 0
+    property string task_id: download_data && download_data.task_id ? download_data.task_id : ""
+    property string file_name: download_data && download_data.file_name ? download_data.file_name : ""
+    property bool pause: download_data && download_data.pause ? true : false
+    property int downloadSpeed: download_data && download_data.downloadSpeed ? download_data.downloadSpeed : 0
+    property int uploadSpeed: download_data && download_data.uploadSpeed ? download_data.uploadSpeed : 0
+    property int numActive: download_data && download_data.numActive ? download_data.numActive : 0
+    property int numWaiting: download_data && download_data.numWaiting ? download_data.numWaiting : 0
+    property int numStopped: download_data && download_data.numStopped ? download_data.numStopped : 0
 
     Rectangle {
         visible: is_select
@@ -64,7 +65,7 @@ MListItem {
                 spacing: 0
 
                 MTypography {
-                    text: download_data.file_name ? download_data.file_name : ""
+                    text: file_name
                     lineHeight: 1
                 }
 

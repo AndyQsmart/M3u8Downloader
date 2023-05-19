@@ -2,6 +2,7 @@
 #include "src/utils/qml_signal.h"
 #include "aria2/aria2util.h"
 #include <QStringList>
+#include <QDir>
 #include <QDebug>
 
 DownloadM3u8::DownloadM3u8() {
@@ -95,4 +96,37 @@ void DownloadM3u8::unpauseAria2Task(QVariant task_id) {
 void DownloadM3u8::onAria2UnpauseCallback(QString task_id) {
     qDebug() << "DownloadM3u8::onAria2UnpauseCallback" << "task_id:" << task_id;
     QMLSignal::instance()->emitSignal(QMLSignalCMD::ARIA2_DOWNLOAD_UNPAUSE, task_id);
+}
+
+void DownloadM3u8::deleteTask(QVariant task_id, QVariant deleteFile) {
+    QString task_id_str = task_id.toString();
+    bool delete_file = deleteFile.toBool();
+    qDebug() << "DownloadM3u8::deleteTask" << "task_id:" << task_id_str;
+
+    // 删除m3u8任务记录
+    auto m3u8_task = this->task_map[task_id_str];
+    m3u8_task->deleteLater();
+
+    // 终止并删除aria2任务
+    auto aria2_task = this->aria2_task_map[task_id_str];
+    if (delete_file) {
+        // 这个回调中删除临时下载路径
+        connect(aria2_task, &Aria2Task::onDownloadStop, this, &DownloadM3u8::deleteTaskAndTempFolderCallback);
+    }
+    else {
+        connect(aria2_task, &Aria2Task::finished, aria2_task, &Aria2Task::deleteLater);
+    }
+    aria2_task->stop();
+
+    QMap<QString, QVariant> ans;
+    ans["task_id"] = task_id_str;
+    ans["delete_file"] = delete_file;
+    QMLSignal::instance()->emitSignal(QMLSignalCMD::MAIN_DELETE_TASK, ans);
+}
+
+void DownloadM3u8::deleteTaskAndTempFolderCallback(QString task_id) {
+    // 删除临时下载文件夹
+    auto aria2_task = this->aria2_task_map[task_id];
+    QDir temp_save_folder(aria2_task->getTempSaveFolder());
+    temp_save_folder.removeRecursively();
 }

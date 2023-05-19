@@ -19,10 +19,38 @@ Pane {
 
     property int currentSelectIndex: -1 // 下载页面的
     property string currentViewName: "DownloadView"
+    property var task_id_map: ({})
 
     ListModel {
         id: download_list
         dynamicRoles: true
+    }
+
+    function getFreeTaskId() {
+        let task_id_list = []
+        for (let task_id in task_id_map) {
+            task_id_list.push(task_id)
+        }
+        task_id_list.sort()
+        let maybe_id = 0
+        for (let i = 0; i < task_id_list.length; i++) {
+            let item = task_id_list[i]
+            if (item === maybe_id) {
+                maybe_id += 1
+            }
+            else {
+                return maybe_id
+            }
+        }
+        return maybe_id
+    }
+
+    function tryDownloadM3u8(download_link, save_path, save_file) {
+        let task_id = getFreeTaskId()
+        console.log("tryDownloadM3u8:")
+        console.log("task_id:", task_id)
+        DownloadM3u8.download(`${task_id}`, download_link, save_path, save_file)
+        create_dialog.close()
     }
 
     function onM3u8DownloadFinished(arg) {
@@ -98,6 +126,21 @@ Pane {
         }
     }
 
+    function onMainDeleteTask(arg) {
+        const { task_id, delete_file } = arg
+        for (let i = 0; i < download_list.count; i++) {
+            let item = download_list.get(i)
+            if (item.task_id === task_id) {
+                download_list.remove(i, 1)
+                delete task_id_map[parseInt(task_id)]
+                if (!delete_file) {
+                    console.log("onMainDeleteTask:need move to trash")
+                }
+                break
+            }
+        }
+    }
+
     Component.onCompleted: {
 //        for (let i = 0 ; i < 140; i++) {
 //            download_list.append({})
@@ -108,6 +151,7 @@ Pane {
         QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_STATE, onAria2DownloadState)
         QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_PAUSE, onAria2DownloadPause)
         QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_UNPAUSE, onAria2DownloadUnpause)
+        QtSignal.registerCallback(QtSignal.signalCmd.MAIN_DELETE_TASK, onMainDeleteTask)
     }
 
     Component.onDestruction: {
@@ -115,6 +159,7 @@ Pane {
         QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_STATE, onAria2DownloadState)
         QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_PAUSE, onAria2DownloadPause)
         QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_UNPAUSE, onAria2DownloadUnpause)
+        QtSignal.unregisterCallback(QtSignal.signalCmd.MAIN_DELETE_TASK, onMainDeleteTask)
     }
 
     RowLayout {
@@ -267,6 +312,8 @@ Pane {
 
     CreateDialog {
         id: create_dialog
+
+        tryDownload: tryDownloadM3u8
     }
 
     MToast {

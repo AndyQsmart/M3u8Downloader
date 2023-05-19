@@ -1,0 +1,7 @@
+Qt5:
+macOS 10.13~macOS 12
+win7~win11
+
+Qt6:
+macOS 11~macOS 13
+win10~win11

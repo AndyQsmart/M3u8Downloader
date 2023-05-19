@@ -165,6 +165,13 @@ Rectangle {
                         text: "删除"
                     }
                 }
+
+                onClicked: {
+                    let item = listModel.get(currentMenuIndex)
+                    let task_id = item.task_id
+                    DownloadM3u8.deleteTask(task_id, false)
+                    right_menu.close()
+                }
             }
             MMenuItem {
                 Layout.fillWidth: true
@@ -184,6 +191,13 @@ Rectangle {
                         leftPadding: 10
                         text: "彻底删除"
                     }
+                }
+
+                onClicked: {
+                    let item = listModel.get(currentMenuIndex)
+                    let task_id = item.task_id
+                    DownloadM3u8.deleteTask(task_id, true)
+                    right_menu.close()
                 }
             }
         }

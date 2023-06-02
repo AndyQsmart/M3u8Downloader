@@ -11,12 +11,11 @@ QT += sql
 # aria2
 win32 {
     INCLUDEPATH += $$PWD/lib/aria2/include
-    # DEPENDPATH += $$PWD/lib/aria2/lib/mac
     contains(QT_ARCH, x86_64) {
-        LIBS += -L$$PWD/lib/aria2/lib/win/ -laria2
+        # PRE_TARGETDEPS += $$PWD/lib/aria2/lib/win64/libaria2.a \
     }
     else {
-        LIBS += -L$$PWD/lib/aria2/lib/win/ -laria2
+        # LIBS += -L$$PWD/lib/aria2/lib/win32/ -laria2
     }
 }
 
@@ -34,8 +33,12 @@ CONFIG += c++11
 
 HEADERS += \
     src/aria2/aria2task.h \
-    src/download_m3u8.h \
     src/aria2/aria2util.h \
+    src/aria2/lib_aria2task.h \
+    src/aria2/lib_aria2util.h \
+    src/aria2/rpc_aria2task.h \
+    src/aria2/rpc_aria2util.h \
+    src/download_m3u8.h \
     src/m3u8/core/httpclient.h \
     src/m3u8/core/m3u8.h \
     src/m3u8/core/mixins.h \
@@ -48,9 +51,11 @@ HEADERS += \
 
 SOURCES += \
         main.cpp \
-        src/aria2/aria2task.cpp \
+        src/aria2/lib_aria2task.cpp \
+        src/aria2/lib_aria2util.cpp \
+        src/aria2/rpc_aria2task.cpp \
+        src/aria2/rpc_aria2util.cpp \
         src/download_m3u8.cpp \
-        src/aria2/aria2util.cpp \
         src/m3u8/core/httpclient.cpp \
         src/m3u8/core/m3u8.cpp \
         src/m3u8/core/mixins.cpp \

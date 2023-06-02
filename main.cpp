@@ -14,9 +14,11 @@ int main(int argc, char *argv[]) {
 #endif
 
     QGuiApplication app(argc, argv);
-    QFont defualt_font;
-    defualt_font.setFamily("Arial");
-    app.setFont(defualt_font);
+#ifdef Q_OS_MAC
+    QFont default_font;
+    default_font.setFamily("Arial");
+    app.setFont(default_font);
+#endif
     app.setOrganizationName("Zhibing");
     app.setOrganizationDomain("www.jiuzhangzaixian.com");
 

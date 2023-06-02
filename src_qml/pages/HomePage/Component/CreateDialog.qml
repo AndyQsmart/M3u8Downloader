@@ -122,7 +122,7 @@ MDialog {
             }
 
             MButton {
-                implicitWidth: 64
+                implicitWidth: 80
                 variant: 'contained'
                 color: 'primary'
                 text: '下载'

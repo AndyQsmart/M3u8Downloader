@@ -7,7 +7,7 @@ import "../Component"
 
 Rectangle {
     id: container
-    anchors.fill: parent
+    // anchors.fill: parent
     property var listModel
     property var onClick
     property int currentMenuIndex: -1

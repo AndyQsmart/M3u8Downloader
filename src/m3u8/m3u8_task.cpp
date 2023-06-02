@@ -1,5 +1,4 @@
 #include "m3u8_task.h"
-#include "../aria2/aria2util.h"
 #include <QDebug>
 
 M3u8Task::M3u8Task(QString task_id) {

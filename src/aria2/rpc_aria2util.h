@@ -1,6 +1,8 @@
 #ifndef RPC_ARIA2UTIL_H
 #define RPC_ARIA2UTIL_H
 
+#include "qglobal.h"
+
 #ifndef Q_OS_MAC
 #include "rpc_aria2task.h"
 #include <QString>

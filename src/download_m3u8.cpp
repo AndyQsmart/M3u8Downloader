@@ -1,6 +1,7 @@
 #include "download_m3u8.h"
 #include "src/utils/qml_signal.h"
 #include "aria2/aria2util.h"
+#include "aria2/aria2task.h"
 #include <QStringList>
 #include <QDir>
 #include <QDebug>

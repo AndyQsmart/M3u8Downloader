@@ -1,8 +1,11 @@
 #ifndef LIB_ARIA2TAKSK_H
 #define LIB_ARIA2TASK_H
 
+#include "qglobal.h"
+
 #ifdef Q_OS_MAC
 #include <aria2.h>
+#include "lib_aria2util.h"
 #include <QObject>
 #include <QString>
 #include <QStringList>
@@ -11,7 +14,7 @@
 
 class QMutex;
 
-class LibAria2Task : public QThread {
+class Aria2Task : public QThread {
     Q_OBJECT
 
 private:

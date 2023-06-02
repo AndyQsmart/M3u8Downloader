@@ -1,12 +1,15 @@
 #ifndef LIB_ARIA2UTIL_H
 #define LIB_ARIA2UTIL_H
 
+#include "qglobal.h"
+
 #ifdef Q_OS_MAC
-#include "lib_aria2task.h"
 #include <aria2.h>
 #include <QString>
 #include <QStringList>
 #include <QList>
+
+class Aria2Task;
 
 class Aria2Util {
 private:

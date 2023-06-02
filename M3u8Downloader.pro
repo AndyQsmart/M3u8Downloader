@@ -25,6 +25,12 @@ macx {
     LIBS += -L$$PWD/lib/aria2/lib/mac/ -laria2.0
 }
 
+#ffmpeg
+macx {
+    INCLUDEPATH += $$PWD/lib/aria2/include
+    LIBS += -L$$PWD/lib/aria2/lib/mac/ -laria2.0
+}
+
 CONFIG += c++11
 
 # You can make your code fail to compile if it uses deprecated APIs.

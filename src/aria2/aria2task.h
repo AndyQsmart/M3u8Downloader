@@ -1,6 +1,8 @@
 #ifndef ARIA2TASK_H
 #define ARIA2TASK_H
 
+#include "qglobal.h"
+
 #ifdef Q_OS_MAC
 #include "lib_aria2task.h"
 #else

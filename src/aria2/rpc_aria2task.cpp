@@ -1,3 +1,5 @@
+#include "qglobal.h"
+
 #ifndef Q_OS_MAC
 
 #include "rpc_aria2task.h"

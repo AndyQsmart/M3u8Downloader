@@ -1,6 +1,7 @@
+#include "qglobal.h"
+
 #ifdef Q_OS_MAC
 #include "lib_aria2task.h"
-#include "lib_aria2util.h"
 #include <QMutex>
 #include <QMutexLocker>
 #include <QTime>

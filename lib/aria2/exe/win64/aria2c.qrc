@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/aria2c">
+        <file>aria2c.exe</file>
+    </qresource>
+</RCC>

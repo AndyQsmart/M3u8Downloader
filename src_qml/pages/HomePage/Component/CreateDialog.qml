@@ -18,7 +18,7 @@ MDialog {
             // 需要判断是否存在问题
             save_file.text = '下载文件.mp4'
         }
-        save_path.text = '/Users/andyqsmart/Downloads'
+        save_path.text = 'C:/Users/AndyQsmart/Downloads'
         download_link.text = 'https://prd-vodcdn.xylink.com/vodfiles/sharefiles/live/2c924e496fb46e43016fbce90dd60562/20201/54018c06-b410-4bd8-a846-cec73ef457e7/stream.m3u8'
     }
 

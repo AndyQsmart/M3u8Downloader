@@ -72,7 +72,17 @@ SOURCES += \
         src/m3u8/m3u8_task.cpp \
         src/utils/qml_signal.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    lib/aria2/exe/win64/aria2c.qrc
+win32 {
+    contains(QT_ARCH, x86_64) {
+        RESOURCES += lib/aria2/exe/win64/aria2c.qrc
+    }
+    else {
+    }
+}
+
+
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

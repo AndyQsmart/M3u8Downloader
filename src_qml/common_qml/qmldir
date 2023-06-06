@@ -1,0 +1,2 @@
+// qmldir
+singleton QHttp 1.0 QHttp.qml

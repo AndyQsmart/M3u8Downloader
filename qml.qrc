@@ -92,5 +92,7 @@
         <file>src_qml/common_component/MaterialUI/MGrow.qml</file>
         <file>src_qml/common_component/MaterialUI/MMenu.qml</file>
         <file>src_qml/common_component/MaterialUI/MMenuItem.qml</file>
+        <file>src_qml/common_qml/QHttp.qml</file>
+        <file>src_qml/common_qml/qmldir</file>
     </qresource>
 </RCC>

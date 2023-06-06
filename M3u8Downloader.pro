@@ -9,16 +9,6 @@ QT += sql
 #LIBS += -lgdi32 -ldwmapi
 
 # aria2
-win32 {
-    INCLUDEPATH += $$PWD/lib/aria2/include
-    contains(QT_ARCH, x86_64) {
-        # PRE_TARGETDEPS += $$PWD/lib/aria2/lib/win64/libaria2.a \
-    }
-    else {
-        # LIBS += -L$$PWD/lib/aria2/lib/win32/ -laria2
-    }
-}
-
 macx {
     INCLUDEPATH += $$PWD/lib/aria2/include
     # PRE_TARGETDEPS += $$PWD/lib/aria2/lib/mac/libaria2.dylib
@@ -27,8 +17,8 @@ macx {
 
 #ffmpeg
 macx {
-    INCLUDEPATH += $$PWD/lib/aria2/include
-    LIBS += -L$$PWD/lib/aria2/lib/mac/ -laria2.0
+#    INCLUDEPATH += $$PWD/lib/aria2/include
+#    LIBS += -L$$PWD/lib/aria2/lib/mac/ -laria2.0
 }
 
 CONFIG += c++11
@@ -53,6 +43,7 @@ HEADERS += \
     src/m3u8/core/protocol.h \
     src/m3u8/core/url_lib.h \
     src/m3u8/m3u8_task.h \
+#    src/utils/qhttp.h \
     src/utils/qml_signal.h
 
 SOURCES += \
@@ -70,10 +61,12 @@ SOURCES += \
         src/m3u8/core/protocol.cpp \
         src/m3u8/core/url_lib.cpp \
         src/m3u8/m3u8_task.cpp \
+#        src/utils/qhttp.cpp \
         src/utils/qml_signal.cpp
 
-RESOURCES += qml.qrc \
-    lib/aria2/exe/win64/aria2c.qrc
+RESOURCES += qml.qrc
+
+# aria2
 win32 {
     contains(QT_ARCH, x86_64) {
         RESOURCES += lib/aria2/exe/win64/aria2c.qrc
@@ -81,8 +74,6 @@ win32 {
     else {
     }
 }
-
-
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =

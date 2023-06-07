@@ -7,6 +7,7 @@ import "./common_js/Color.js" as Color
 import "./common_component/Route"
 import "./common_component/MaterialUI"
 import "./common_component/Signal/QtSignal"
+import "./common_qml"
 import "./instance_component/SQLTable/SettingData"
 import "./instance_component/SystemTray"
 import "./pages/HomePage"
@@ -25,6 +26,28 @@ Window {
         QtSignal.runCallback(cmd, data)
 //        console.log(cmd)
 //        console.log(JSON.stringify(data))
+    }
+
+    function onAppEvent(data) {
+        const { event_name, event_data } = data
+        if (event_name === "MAC_ApplicationActive") {
+            mainWindow.show()
+        }
+        else if (event_name === "MAC_Quit") {
+            quitApp()
+        }
+    }
+
+    function quitApp() {
+        console.log("quitApp:start shutdown aria2")
+        QHttp.postJSON("http://localhost:6800/jsonrpc", {
+            jsonrpc:'2.0',
+            id:'qt',
+            method:'aria2.shutdown',
+        }, function(res) {
+            console.log(res)
+            Qt.quit()
+        })
     }
 
     // 可能是qmltype信息不全，有M16警告，这里屏蔽下
@@ -50,6 +73,7 @@ Window {
 
         Component.onCompleted: {
             QMLSignal.qmlSignal.connect(onQtSignal)
+            QtSignal.registerCallback(QtSignal.signalCmd.APP_EVENT, onAppEvent)
             SettingData.getValue('RouteStack', function(value) {
                 console.log("(main.qml)Recover route", JSON.stringify(value))
                 if (!value || value.length === 0) {
@@ -115,6 +139,10 @@ Window {
         onShowWindow: {
             mainWindow.show()
             mainWindow.requestActivate()
+        }
+
+        onQuitApp: {
+            mainWindow.quitApp()
         }
     }
 }

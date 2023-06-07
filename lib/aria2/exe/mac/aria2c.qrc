@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/aria2c">
+        <file>aria2.conf</file>
+        <file>aria2c</file>
+    </qresource>
+</RCC>

@@ -10,6 +10,7 @@ enum QMLSignalCMD {
     ARIA2_DOWNLOAD_PAUSE = 3,
     ARIA2_DOWNLOAD_UNPAUSE = 4,
     MAIN_DELETE_TASK = 5,
+    APP_EVENT = 6,
 };
 
 class QMLSignal : public QObject {

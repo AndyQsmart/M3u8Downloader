@@ -6,14 +6,11 @@
 #include <QVariant>
 #include <QMap>
 
-class Aria2Task;
-
 class DownloadM3u8 : public QObject {
     Q_OBJECT
 
 private:
     QMap<QString, M3u8Task *> task_map;
-    QMap<QString, Aria2Task *> aria2_task_map;
 
 public:
     DownloadM3u8();

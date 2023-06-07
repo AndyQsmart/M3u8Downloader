@@ -8,7 +8,7 @@ Item {
         xhr.open("POST", url)
         xhr.setRequestHeader("Content-Type", "application/json")
         xhr.onreadystatechange = function() {
-            console.log("xhr.onreadystatechange")
+            // console.log("xhr.onreadystatechange")
             if (xhr.readyState == 4) {
                 if (callback) {
                     callback(xhr.responseText)

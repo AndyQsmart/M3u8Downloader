@@ -3,8 +3,13 @@
 #include <QQmlContext>
 #include <QQuickStyle>
 #include <QFont>
+#include <QString>
+#include <QVariant>
+#include <QMap>
 #include "src/download_m3u8.h"
 #include "src/utils/qml_signal.h"
+#include "src/utils/application_event_filter.h"
+#include <QDebug>
 
 int main(int argc, char *argv[]) {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
@@ -28,6 +33,15 @@ int main(int argc, char *argv[]) {
     engine.rootContext()->setContextProperty("DownloadM3u8", &download_m3u8);
     // 信号相关
     engine.rootContext()->setContextProperty("QMLSignal", QMLSignal::instance());
+
+    // 全局特殊事件处理
+    ApplicationEventFilter app_event_filter([](QString event_name, QVariant event_data) {
+        QMap<QString, QVariant> data;
+        data["event_name"] = event_name;
+        data["event_data"] = event_data;
+        QMLSignal::instance()->emitSignal(QMLSignalCMD::APP_EVENT, data);
+    });
+    app.installEventFilter(&app_event_filter);
 
     const QUrl url(QStringLiteral("qrc:/src_qml/main.qml"));
     QObject::connect(

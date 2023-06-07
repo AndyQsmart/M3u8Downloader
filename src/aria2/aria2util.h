@@ -1,12 +1,24 @@
 #ifndef ARIA2UTIL_H
 #define ARIA2UTIL_H
 
-#include "qglobal.h"
+#include <QString>
+#include <QStringList>
+#include <QList>
 
-#ifdef Q_OS_MAC
-#include "lib_aria2util.h"
-#else
-#include "rpc_aria2util.h"
-#endif
+class QProcess;
+
+class Aria2Util {
+private:
+    QProcess *process=NULL;
+    static Aria2Util *_instance;
+    static bool is_init;
+
+public:
+    Aria2Util();
+    ~Aria2Util();
+    void checkAria2cConfFile();
+    static void init();
+    static void uninit();
+};
 
 #endif // ARIA2UTIL_H

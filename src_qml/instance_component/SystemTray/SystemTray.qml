@@ -6,6 +6,7 @@ import Qt.labs.platform 1.1
 
 SystemTrayIcon {
     signal showWindow()
+    signal quitApp()
 
     visible: true
     icon.source: "../../common_image/Icon/logo.png"
@@ -24,7 +25,7 @@ SystemTrayIcon {
 
         MenuItem {
             text: qsTr("退出")
-            onTriggered: Qt.quit()
+            onTriggered: quitApp()
         }
     }
 }

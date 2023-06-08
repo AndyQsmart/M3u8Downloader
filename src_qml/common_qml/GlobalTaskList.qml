@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 
 Item {
     property var download_list: ListModel {
-        // const { task_id, file_name, file_path, m3u8, file_urls, pause, downloadFile } = item
+        // const { download_link, file_name, file_path, m3u8, file_urls, pause, downloadFile } = item
         // const { gid, uri, out, status } = downloadFile
         dynamicRoles: true
     }
@@ -14,6 +14,17 @@ Item {
     }
     property var trash_list: ListModel {
         dynamicRoles: true
+    }
+
+    Timer {
+        id: set_timeout
+        interval: 1000
+        running: false
+        repeat: false
+    }
+
+    function recoverFromDisk() {
+
     }
 
     function flushListToDisk() {
@@ -26,7 +37,12 @@ Item {
             let save_path = Aria2Util.getTempSaveFolder(item.file_path, item.file_name)
             download_list.remove(index, 1)
             if (delete_file) {
-                DownloadM3u8.deleteTempFolder(save_path)
+                set_timeout.interval = 1000
+                set_timeout.triggered.connect(function() {
+                    DownloadM3u8.deleteTempFolder(save_path)
+                    console.log("GlobalTaskList.DownloadM3u8.deleteTempFolder:", save_path)
+                })
+                set_timeout.start()
             }
             else {
                 console.log("GlobalTaskList.deleteDownload:need move to trash")

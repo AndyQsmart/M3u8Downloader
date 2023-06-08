@@ -14,7 +14,6 @@ MListItem {
     property bool is_select: false
     property var onLeftClick
     property var onRightClick
-    property string task_id: download_data && download_data.task_id ? download_data.task_id : ""
     property string file_name: download_data && download_data.file_name ? download_data.file_name : ""
     property bool pause: download_data && download_data.pause ? true : false
     property int downloadSpeed: download_data && download_data.downloadSpeed ? download_data.downloadSpeed : 0
@@ -158,11 +157,11 @@ MListItem {
 
                         onClicked: {
                             if (pause) {
-                                console.log("DownloadItem.unpause task:", task_id)
+                                console.log("DownloadItem.unpause task:", mListItem.index)
                                 GlobalTaskList.unpauseDownload(mListItem.index)
                             }
                             else {
-                                console.log("DownloadItem.pause task:", task_id)
+                                console.log("DownloadItem.pause task:", mListItem.index)
                                 GlobalTaskList.pauseDownload(mListItem.index)
                             }
                         }

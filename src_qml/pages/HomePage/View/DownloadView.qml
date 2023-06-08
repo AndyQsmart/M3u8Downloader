@@ -135,14 +135,12 @@ Rectangle {
                 }
 
                 onClicked: {
-                    let item = listModel.get(currentMenuIndex)
-                    let task_id = item.task_id
                     if (pause) {
-                        console.log("DownloadItem.unpause task:", task_id)
+                        console.log("DownloadItem.unpause task:", currentMenuIndex)
                         GlobalTaskList.unpauseDownload(currentMenuIndex)
                     }
                     else {
-                        console.log("DownloadItem.pause task:", task_id)
+                        console.log("DownloadItem.pause task:", currentMenuIndex)
                         GlobalTaskList.pauseDownload(currentMenuIndex)
                     }
                     right_menu.close()
@@ -169,8 +167,6 @@ Rectangle {
                 }
 
                 onClicked: {
-                    let item = listModel.get(currentMenuIndex)
-                    let task_id = item.task_id
                     GlobalTaskList.deleteDownload(currentMenuIndex, false)
                     right_menu.close()
                 }
@@ -196,8 +192,6 @@ Rectangle {
                 }
 
                 onClicked: {
-                    let item = listModel.get(currentMenuIndex)
-                    let task_id = item.task_id
                     GlobalTaskList.deleteDownload(currentMenuIndex, true)
                     right_menu.close()
                 }

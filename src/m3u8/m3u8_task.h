@@ -10,17 +10,16 @@ class M3u8Task : public QObject {
     Q_OBJECT
 
 private:
-    QString task_id;
     QString download_link;
     QString file_path;
     QString file_name;
-    M3U8 *m3u8;
+    M3U8 *m3u8=NULL;
 
 public:
-    M3u8Task(QString task_id);
+    M3u8Task();
     ~M3u8Task();
     void download(QString download_link, QString file_path, QString file_name);
-    QString getTaskId();
+    QString getDownloadLink();
     QString getFilePath();
     QString getFileName();
     M3U8 *getM3u8();

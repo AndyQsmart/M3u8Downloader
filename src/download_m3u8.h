@@ -13,7 +13,7 @@ public:
     DownloadM3u8();
     ~DownloadM3u8();
 
-    Q_INVOKABLE void download(QVariant task_id, QVariant download_link, QVariant file_path, QVariant file_name);
+    Q_INVOKABLE void download(QVariant download_link, QVariant file_path, QVariant file_name);
     Q_INVOKABLE void initAria2();
     Q_INVOKABLE void deleteTempFolder(QVariant path);
 };

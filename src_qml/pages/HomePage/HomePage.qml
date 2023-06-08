@@ -20,40 +20,19 @@ Pane {
 
     property int currentSelectIndex: -1 // 下载页面的
     property string currentViewName: "DownloadView"
-    property var task_id_map: ({})
-
-    function getFreeTaskId() {
-        let task_id_list = []
-        for (let task_id in task_id_map) {
-            task_id_list.push(task_id)
-        }
-        task_id_list.sort()
-        let maybe_id = 0
-        for (let i = 0; i < task_id_list.length; i++) {
-            let item = task_id_list[i]
-            if (item === maybe_id) {
-                maybe_id += 1
-            }
-            else {
-                return maybe_id
-            }
-        }
-        return maybe_id
-    }
 
     function tryDownloadM3u8(download_link, save_path, save_file) {
-        let task_id = getFreeTaskId()
         console.log("tryDownloadM3u8:")
-        console.log("task_id:", task_id)
-        DownloadM3u8.download(`${task_id}`, download_link, save_path, save_file)
+        console.log("download_link:", download_link)
+        DownloadM3u8.download(download_link, save_path, save_file)
         create_dialog.close()
     }
 
     function onM3u8DownloadFinished(arg) {
-        const { task_id, file_name, file_path, m3u8 } = arg
+        const { download_link, file_name, file_path, m3u8 } = arg
         const { base_uri, base_path, files } = m3u8
         console.log("onM3u8DownloadFinished:")
-        console.log("task_id:", task_id)
+        console.log("download_link:", download_link)
         console.log("file_name:", file_name)
         console.log("file_path:", file_path)
         console.log("m3u8.base_uri", base_uri)
@@ -79,7 +58,7 @@ Pane {
         Aria2Util.downloadUri(file_path, file_name, file_urls, function(downloadFile) {
             // console.log(JSON.stringify(gid_list))
             GlobalTaskList.addDownloadItem({
-                task_id,
+                download_link,
                 file_path,
                 file_name,
                 m3u8,

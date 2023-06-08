@@ -1,16 +1,17 @@
 #include "m3u8_task.h"
 #include <QDebug>
 
-M3u8Task::M3u8Task(QString task_id) {
-    this->task_id = task_id;
+M3u8Task::M3u8Task() {
 }
 
 M3u8Task::~M3u8Task() {
-    delete this->m3u8;
+    if (this->m3u8) {
+        delete this->m3u8;
+    }
 }
 
-QString M3u8Task::getTaskId() {
-    return this->task_id;
+QString M3u8Task::getDownloadLink() {
+    return this->download_link;
 }
 
 QString M3u8Task::getFilePath() {

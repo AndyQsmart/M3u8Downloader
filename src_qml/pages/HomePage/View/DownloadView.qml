@@ -171,7 +171,7 @@ Rectangle {
                 onClicked: {
                     let item = listModel.get(currentMenuIndex)
                     let task_id = item.task_id
-                    DownloadM3u8.deleteTask(task_id, false)
+                    GlobalTaskList.deleteDownload(currentMenuIndex, false)
                     right_menu.close()
                 }
             }
@@ -198,7 +198,7 @@ Rectangle {
                 onClicked: {
                     let item = listModel.get(currentMenuIndex)
                     let task_id = item.task_id
-                    DownloadM3u8.deleteTask(task_id, true)
+                    GlobalTaskList.deleteDownload(currentMenuIndex, true)
                     right_menu.close()
                 }
             }

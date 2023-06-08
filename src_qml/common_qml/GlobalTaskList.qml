@@ -16,8 +16,23 @@ Item {
         dynamicRoles: true
     }
 
-    function deleteDownload(index, delete_file, callback) {
+    function flushListToDisk() {
 
+    }
+
+    function deleteDownload(index, delete_file, callback) {
+        pauseDownload(index, function() {
+            let item = download_list.get(index)
+            let save_path = Aria2Util.getTempSaveFolder(item.file_path, item.file_name)
+            download_list.remove(index, 1)
+            if (delete_file) {
+                DownloadM3u8.deleteTempFolder(save_path)
+            }
+            else {
+                console.log("GlobalTaskList.deleteDownload:need move to trash")
+            }
+            flushListToDisk()
+        })
     }
 
     function unpauseDownload(index, callback) {
@@ -37,6 +52,7 @@ Item {
             if (callback) {
                 callback()
             }
+            flushListToDisk()
         })
     }
 
@@ -57,6 +73,7 @@ Item {
             if (callback) {
                 callback()
             }
+            flushListToDisk()
         })
     }
 
@@ -106,10 +123,12 @@ Item {
                 numStopped,
                 numTotal: downloadFile.count,
             })
+            flushListToDisk()
         })
     }
 
     function addDownloadItem(item) {
         download_list.append(item)
+        flushListToDisk()
     }
 }

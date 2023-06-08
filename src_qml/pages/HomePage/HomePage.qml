@@ -89,21 +89,6 @@ Pane {
         })
     }
 
-    function onMainDeleteTask(arg) {
-        const { task_id, delete_file } = arg
-        for (let i = 0; i < download_list.count; i++) {
-            let item = download_list.get(i)
-            if (item.task_id === task_id) {
-                download_list.remove(i, 1)
-                delete task_id_map[parseInt(task_id)]
-                if (!delete_file) {
-                    console.log("onMainDeleteTask:need move to trash")
-                }
-                break
-            }
-        }
-    }
-
     Component.onCompleted: {
 //        for (let i = 0 ; i < 140; i++) {
 //            download_list.append({})

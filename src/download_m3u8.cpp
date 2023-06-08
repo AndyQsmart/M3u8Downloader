@@ -73,9 +73,8 @@ void DownloadM3u8::initAria2() {
 ////    QMLSignal::instance()->emitSignal(QMLSignalCMD::MAIN_DELETE_TASK, ans);
 //}
 
-//void DownloadM3u8::deleteTaskAndTempFolderCallback(QString task_id) {
-////    // 删除临时下载文件夹
-////    auto aria2_task = this->aria2_task_map[task_id];
-////    QDir temp_save_folder(aria2_task->getTempSaveFolder());
-////    temp_save_folder.removeRecursively();
-//}
+void DownloadM3u8::deleteTempFolder(QVariant path) {
+    // 删除临时下载文件夹
+    QDir temp_save_folder(path.toString());
+    temp_save_folder.removeRecursively();
+}

@@ -1,18 +1,115 @@
 pragma Singleton
 
 import QtQuick 2.15
+import QtQuick.Controls 2.15
 
 Item {
-    property var download_list: []
-    property var history_list: []
-    property var trash_list: []
-
-    function addDownloadItem(item) {
-        // const { task_id, file_name, file_path, m3u8, file_urls, gid_list } = item
-        download_list.push(item)
+    property var download_list: ListModel {
+        // const { task_id, file_name, file_path, m3u8, file_urls, pause, downloadFile } = item
+        // const { gid, uri, out, status } = downloadFile
+        dynamicRoles: true
+    }
+    property var history_list: ListModel {
+        dynamicRoles: true
+    }
+    property var trash_list: ListModel {
+        dynamicRoles: true
     }
 
-    function getDownloadList() {
-        return download_list
+    function deleteDownload(index, delete_file, callback) {
+
+    }
+
+    function unpauseDownload(index, callback) {
+        let download_item = download_list.get(index)
+        let downloadFile = download_item.downloadFile
+        let gid_list = []
+        for (let i = 0; i < downloadFile.count; i++) {
+            let item = downloadFile.get(i)
+            if (item.status !== "complete") {
+                gid_list.push(item.gid)
+            }
+        }
+        Aria2Util.multiUnpause(gid_list, function(res) {
+            download_list.set(index, {
+                pause: false,
+            })
+            if (callback) {
+                callback()
+            }
+        })
+    }
+
+    function pauseDownload(index, callback) {
+        let download_item = download_list.get(index)
+        let downloadFile = download_item.downloadFile
+        let gid_list = []
+        for (let i = 0; i < downloadFile.count; i++) {
+            let item = downloadFile.get(i)
+            if (item.status !== "complete") {
+                gid_list.push(item.gid)
+            }
+        }
+        Aria2Util.multiPause(gid_list, function(res) {
+            download_list.set(index, {
+                pause: true,
+            })
+            if (callback) {
+                callback()
+            }
+        })
+    }
+
+    function refreshDownloadStatus(index) {
+        var downloadSpeed = 0
+        var uploadSpeed = 0
+        var numActive = 0
+        var numWaiting = 0
+        var numStopped = 0
+
+        let download_item = download_list.get(index)
+        let downloadFile = download_item.downloadFile
+        let gid_list = []
+        let gid_map = {}
+        for (let i = 0; i < downloadFile.count; i++) {
+            let item = downloadFile.get(i)
+            if (item.status !== "complete") {
+                gid_list.push(item.gid)
+                gid_map[item.gid] = i
+            }
+            else {
+                numStopped += 1
+            }
+        }
+
+        Aria2Util.multicallTellStatus(gid_list, function(res) {
+            for (let j = 0; j < res.length; j++) {
+                let item = res[j][0]
+                let ts_index = gid_map[item.gid]
+                download_item.downloadFile.set(ts_index, {
+                    status: item.status,
+                    totalLength: item.totalLength,
+                    completedLength: item.completedLength,
+                    uploadLength: item.uploadLength,
+                    downloadSpeed: item.downloadSpeed,
+                    uploadSpeed: item.uploadSpeed,
+                })
+                if (item.status === "active") {
+                    downloadSpeed += parseInt(item.downloadSpeed)
+                }
+            }
+            download_list.set(index, {
+                downloadSpeed,
+                uploadSpeed,
+                numActive,
+                numWaiting,
+                numStopped,
+                numTotal: downloadFile.count,
+            })
+        })
+    }
+
+    function addDownloadItem(item) {
+        download_list.append(item)
     }
 }

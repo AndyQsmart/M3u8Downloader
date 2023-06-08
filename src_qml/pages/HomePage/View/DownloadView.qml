@@ -2,6 +2,7 @@ import QtQuick 2.13
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
 import "../../../common_component/MaterialUI"
+import "../../../common_qml"
 import "../../../common_js/Color.js" as Color
 import "../Component"
 
@@ -22,6 +23,7 @@ Rectangle {
             anchors.fill: parent
             anchors.margins: 10
             delegate: DownloadItem {
+                index: index
                 width: download_list_view.width
                 height: download_list_view.item_height
                 is_select: currentSelectIndex === index
@@ -137,11 +139,11 @@ Rectangle {
                     let task_id = item.task_id
                     if (pause) {
                         console.log("DownloadItem.unpause task:", task_id)
-                        DownloadM3u8.unpauseAria2Task(task_id)
+                        GlobalTaskList.unpauseDownload(currentMenuIndex)
                     }
                     else {
                         console.log("DownloadItem.pause task:", task_id)
-                        DownloadM3u8.pauseAria2Task(task_id)
+                        GlobalTaskList.pauseDownload(currentMenuIndex)
                     }
                     right_menu.close()
                 }

@@ -1,6 +1,7 @@
 import QtQuick 2.13
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
+import "../../../common_qml"
 import "../../../common_component/MaterialUI"
 import "../../../common_component/MaterialUI/styles"
 import "../../../common_js/Color.js" as Color
@@ -8,6 +9,7 @@ import "../../../common_js/Color.js" as Color
 MListItem {
     id: mListItem
     button: true
+    property int index
     property var download_data: ({})
     property bool is_select: false
     property var onLeftClick
@@ -21,6 +23,15 @@ MListItem {
     property int numWaiting: download_data && download_data.numWaiting ? download_data.numWaiting : 0
     property int numStopped: download_data && download_data.numStopped ? download_data.numStopped : 0
     property int numTotal: download_data && download_data.numTotal ? download_data.numTotal : 0
+
+    Timer {
+        interval: 500
+        running: !mListItem.pause
+        repeat: true
+        onTriggered: {
+            GlobalTaskList.refreshDownloadStatus(index)
+        }
+    }
 
     Rectangle {
         visible: is_select
@@ -148,11 +159,11 @@ MListItem {
                         onClicked: {
                             if (pause) {
                                 console.log("DownloadItem.unpause task:", task_id)
-                                DownloadM3u8.unpauseAria2Task(task_id)
+                                GlobalTaskList.unpauseDownload(mListItem.index)
                             }
                             else {
                                 console.log("DownloadItem.pause task:", task_id)
-                                DownloadM3u8.pauseAria2Task(task_id)
+                                GlobalTaskList.pauseDownload(mListItem.index)
                             }
                         }
 

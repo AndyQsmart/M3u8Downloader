@@ -47,59 +47,6 @@ void DownloadM3u8::initAria2() {
     Aria2Util::init();
 }
 
-//void DownloadM3u8::onAria2StateCallback(QString task_id, QVariant data) {
-////    QMap<QString, QVariant> ans;
-////    ans["task_id"] = task_id;
-////    ans["data"] = data;
-////    QMLSignal::instance()->emitSignal(QMLSignalCMD::ARIA2_DOWNLOAD_STATE, ans);
-//}
-
-//void DownloadM3u8::downloadTs(QVariant task_id, QVariant file_path, QVariant file_name, QVariant ts_list) {
-////    QString task_id_str = task_id.toString();
-////    QList<QVariant> ts_list_obj = ts_list.toList();
-////    QStringList ts_list_v;
-////    for (int i = 0; i < ts_list_obj.size(); i++) {
-////        ts_list_v.append(ts_list_obj[i].toString());
-////    }
-////    QString file_path_str = file_path.toString();
-////    QString file_name_str = file_name.toString();
-
-////    Aria2Util::init();
-////    auto aria2_task = Aria2Util::createTask(task_id_str, file_path_str, file_name_str, ts_list_v);
-////    connect(aria2_task, &Aria2Task::onDownloadState, this, &DownloadM3u8::onAria2StateCallback);
-////    connect(aria2_task, &Aria2Task::onDownloadPause, this, &DownloadM3u8::onAria2PauseCallback);
-////    connect(aria2_task, &Aria2Task::onDownloadUnpause, this, &DownloadM3u8::onAria2UnpauseCallback);
-////    aria2_task->start();
-////    aria2_task_map[task_id_str] = aria2_task;
-//}
-
-//void DownloadM3u8::pauseAria2Task(QVariant task_id) {
-////    QString task_id_str = task_id.toString();
-////    if (aria2_task_map.find(task_id_str) != aria2_task_map.end()) {
-////        auto aria2_task = aria2_task_map[task_id_str];
-////        aria2_task->pause();
-////    }
-//}
-
-//void DownloadM3u8::onAria2PauseCallback(QString task_id) {
-////    qDebug() << "DownloadM3u8::onAria2PauseCallback" << "task_id:" << task_id;
-////    QMLSignal::instance()->emitSignal(QMLSignalCMD::ARIA2_DOWNLOAD_PAUSE, task_id);
-//}
-
-//void DownloadM3u8::unpauseAria2Task(QVariant task_id) {
-////    qDebug() << "DownloadM3u8::unpauseAria2Task" << "task_id:" << task_id;
-////    QString task_id_str = task_id.toString();
-////    if (aria2_task_map.find(task_id_str) != aria2_task_map.end()) {
-////        auto aria2_task = aria2_task_map[task_id_str];
-////        aria2_task->unpause();
-////    }
-//}
-
-//void DownloadM3u8::onAria2UnpauseCallback(QString task_id) {
-////    qDebug() << "DownloadM3u8::onAria2UnpauseCallback" << "task_id:" << task_id;
-////    QMLSignal::instance()->emitSignal(QMLSignalCMD::ARIA2_DOWNLOAD_UNPAUSE, task_id);
-//}
-
 //void DownloadM3u8::deleteTask(QVariant task_id, QVariant deleteFile) {
 ////    QString task_id_str = task_id.toString();
 ////    bool delete_file = deleteFile.toBool();

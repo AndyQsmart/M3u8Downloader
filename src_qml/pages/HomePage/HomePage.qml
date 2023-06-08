@@ -22,81 +22,6 @@ Pane {
     property string currentViewName: "DownloadView"
     property var task_id_map: ({})
 
-    ListModel {
-        id: download_list
-        dynamicRoles: true
-    }
-
-    Timer {
-        interval: 500
-        running: true
-        repeat: true
-        onTriggered: {
-            refreshDownloadStatus()
-        }
-    }
-
-    function refreshDownloadStatus() {
-        // Aria2Util.getGlobalStat(function(res) {
-        //     // console.log(res)
-        // })
-        Aria2Util.tellActive(function(res) {
-            //console.log("Aria2Util.tellActive")
-            //console.log(res)
-            const status_map = {}
-            var i = 0;
-            var item;
-            for (i = 0; i < res.length; i++) {
-                item = res[i]
-                // const { gid, uploadSpeed, downloadSpeed, completedLength, totalLength } = item
-                const { gid } = item
-                status_map[gid] = item
-            }
-
-            let download_list = GlobalTaskList.getDownloadList()
-            let ans = []
-            for (i = 0 ; i < download_list.length; i++) {
-                item = download_list[i]
-                var downloadSpeed = 0
-                var uploadSpeed = 0
-                var numActive = 0
-                var numWaiting = 0
-                var numStopped = 0
-                var downloadFile = []
-                const { gid_list } = item
-                var last_active_gid = ""
-                for (let j = 0; j < gid_list.length; j++) {
-                    let the_gid = gid_list[j]
-                    if (status_map[the_gid]) {
-                        let the_status = status_map[the_gid]
-                        downloadSpeed += the_status.downloadSpeed ? parseInt(the_status.downloadSpeed) : 0
-                        uploadSpeed += the_status.uploadSpeed ? parseInt(the_status.uploadSpeed) : 0
-                        numActive += 1
-                        downloadFile.push({
-                            completedLength: the_status.completedLength,
-                            totalLength: the_status.totalLength,
-                            downloadSpeed: the_status.downloadSpeed,
-                            uploadSpeed: the_status.uploadSpeed,
-                        })
-                        last_active_gid = the_gid
-                    }
-                }
-                // 需要刷新直到last_active_gid的下载状态
-                ans.push({
-                    downloadSpeed,
-                    uploadSpeed,
-                    numActive,
-                    numWaiting,
-                    numStopped,
-                    numTotal: gid_list.length,
-                    downloadFile,
-                })
-            }
-            // console.log(JSON.stringify(ans))
-            onAria2DownloadState(ans)
-        })
-    }
-
     function getFreeTaskId() {
         let task_id_list = []
         for (let task_id in task_id_map) {
@@ -151,7 +76,7 @@ Pane {
             }
         }
         // console.log("file_urls:", JSON.stringify(file_urls))
-        Aria2Util.downloadUri(file_path, file_name, file_urls, function(gid_list) {
+        Aria2Util.downloadUri(file_path, file_name, file_urls, function(downloadFile) {
             // console.log(JSON.stringify(gid_list))
             GlobalTaskList.addDownloadItem({
                 task_id,
@@ -159,47 +84,9 @@ Pane {
                 file_name,
                 m3u8,
                 file_urls,
-                gid_list,
+                downloadFile,
             })
         })
-        download_list.append({
-            task_id,
-            file_path,
-            file_name,
-            file_urls,
-        })
-    }
-
-    function onAria2DownloadState(data) {
-        for (let i = 0; i < download_list.count; i++) {
-            download_list.set(i, data[i] ? data[i] : {})
-        }
-    }
-
-    function onAria2DownloadPause(task_id) {
-        console.log("HomePage.onAria2DownloadPause:", task_id)
-        for (let i = 0; i < download_list.count; i++) {
-            let item = download_list.get(i)
-            if (item.task_id === task_id) {
-                download_list.set(i, {
-                    pause: true,
-                })
-                break
-            }
-        }
-    }
-
-    function onAria2DownloadUnpause(task_id) {
-        console.log("HomePage.onAria2DownloadUnpause:", task_id)
-        for (let i = 0; i < download_list.count; i++) {
-            let item = download_list.get(i)
-            if (item.task_id === task_id) {
-                download_list.set(i, {
-                    pause: false,
-                })
-                break
-            }
-        }
     }
 
     function onMainDeleteTask(arg) {
@@ -347,7 +234,7 @@ Pane {
                         if (currentSelectIndex == -1) {
                             return null
                         }
-                        let ans = download_list.get(currentSelectIndex)
+                        let ans = GlobalTaskList.download_list.get(currentSelectIndex)
                         return ans
                     }
                 }
@@ -365,7 +252,7 @@ Pane {
         id: download_view
 
         DownloadView {
-            listModel: download_list
+            listModel: GlobalTaskList.download_list
             onClick: function(index) {
                 container.currentSelectIndex = index
             }

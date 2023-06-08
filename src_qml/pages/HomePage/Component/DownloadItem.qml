@@ -20,6 +20,7 @@ MListItem {
     property int numActive: download_data && download_data.numActive ? download_data.numActive : 0
     property int numWaiting: download_data && download_data.numWaiting ? download_data.numWaiting : 0
     property int numStopped: download_data && download_data.numStopped ? download_data.numStopped : 0
+    property int numTotal: download_data && download_data.numTotal ? download_data.numTotal : 0
 
     Rectangle {
         visible: is_select
@@ -71,7 +72,7 @@ MListItem {
 
                 RowLayout {
                     MTypography {
-                        text: `${numStopped}/${numWaiting+numActive+numStopped}`
+                        text: `${numStopped}/${numTotal}`
                         variant: "caption"
                         textColor: "textSecondary"
                         lineHeight: 1
@@ -115,7 +116,7 @@ MListItem {
 
                 MLinearProgress {
                     ColumnLayout.fillWidth: true
-                    value: numStopped/(numWaiting+numActive+numStopped)
+                    value: numStopped/(numTotal)
                     variant: "determinate"
                 }
             }

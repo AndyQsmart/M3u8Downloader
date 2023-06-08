@@ -1,4 +1,5 @@
 #include "aria2util.h"
+#include "src/utils/qml_signal.h"
 #include <QProcess>
 #include <QUrl>
 #include <QDir>
@@ -71,9 +72,12 @@ Aria2Util::Aria2Util() {
     QStringList arguments;
     arguments.append(QString("--conf-path=%1").arg(ariac_conf_path));
     this->process->setArguments(arguments);
+    connect(this->process, &QProcess::started, []() {
+        QMLSignal::instance()->emitSignal(QMLSignalCMD::ARIA2_INIT, QVariant());
+    });
     this->process->startDetached();
     // qDebug() << "exe error" << this->process->errorString();
-    //qDebug() << "exe out" << QString(this->process->readAllStandardOutput());
+    // qDebug() << "exe out" << QString(this->process->readAllStandardOutput());
 }
 
 Aria2Util::~Aria2Util() {

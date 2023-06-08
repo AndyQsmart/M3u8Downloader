@@ -40,11 +40,7 @@ Window {
 
     function quitApp() {
         console.log("quitApp:start shutdown aria2")
-        QHttp.postJSON("http://localhost:6800/jsonrpc", {
-            jsonrpc:'2.0',
-            id:'qt',
-            method:'aria2.shutdown',
-        }, function(res) {
+        Aria2Util.shutdown(function (res) {
             console.log(res)
             Qt.quit()
         })
@@ -74,6 +70,7 @@ Window {
         Component.onCompleted: {
             QMLSignal.qmlSignal.connect(onQtSignal)
             QtSignal.registerCallback(QtSignal.signalCmd.APP_EVENT, onAppEvent)
+            Aria2Util.init()
             SettingData.getValue('RouteStack', function(value) {
                 console.log("(main.qml)Recover route", JSON.stringify(value))
                 if (!value || value.length === 0) {

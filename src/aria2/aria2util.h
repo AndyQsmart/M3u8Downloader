@@ -1,13 +1,16 @@
 #ifndef ARIA2UTIL_H
 #define ARIA2UTIL_H
 
+#include <QObject>
 #include <QString>
 #include <QStringList>
 #include <QList>
 
 class QProcess;
 
-class Aria2Util {
+class Aria2Util : public QObject {
+    Q_OBJECT
+
 private:
     QProcess *process=NULL;
     static Aria2Util *_instance;

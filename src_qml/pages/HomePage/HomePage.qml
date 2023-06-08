@@ -5,6 +5,7 @@ import QtQuick.Layouts 1.11
 import "../../common_component/MaterialUI"
 import "../../common_component/Route"
 import "../../common_component/Signal/QtSignal"
+import "../../common_qml"
 import "../../instance_component/Navbar"
 import "./Component"
 import "./View"
@@ -24,6 +25,76 @@ Pane {
     ListModel {
         id: download_list
         dynamicRoles: true
+    }
+
+    Timer {
+        interval: 500
+        running: true
+        repeat: true
+        onTriggered: {
+            refreshDownloadStatus()
+        }
+    }
+
+    function refreshDownloadStatus() {
+        // Aria2Util.getGlobalStat(function(res) {
+        //     // console.log(res)
+        // })
+        Aria2Util.tellActive(function(res) {
+            //console.log("Aria2Util.tellActive")
+            //console.log(res)
+            const status_map = {}
+            var i = 0;
+            var item;
+            for (i = 0; i < res.length; i++) {
+                item = res[i]
+                // const { gid, uploadSpeed, downloadSpeed, completedLength, totalLength } = item
+                const { gid } = item
+                status_map[gid] = item
+            }
+
+            let download_list = GlobalTaskList.getDownloadList()
+            let ans = []
+            for (i = 0 ; i < download_list.length; i++) {
+                item = download_list[i]
+                var downloadSpeed = 0
+                var uploadSpeed = 0
+                var numActive = 0
+                var numWaiting = 0
+                var numStopped = 0
+                var downloadFile = []
+                const { gid_list } = item
+                var last_active_gid = ""
+                for (let j = 0; j < gid_list.length; j++) {
+                    let the_gid = gid_list[j]
+                    if (status_map[the_gid]) {
+                        let the_status = status_map[the_gid]
+                        downloadSpeed += the_status.downloadSpeed ? parseInt(the_status.downloadSpeed) : 0
+                        uploadSpeed += the_status.uploadSpeed ? parseInt(the_status.uploadSpeed) : 0
+                        numActive += 1
+                        downloadFile.push({
+                            completedLength: the_status.completedLength,
+                            totalLength: the_status.totalLength,
+                            downloadSpeed: the_status.downloadSpeed,
+                            uploadSpeed: the_status.uploadSpeed,
+                        })
+                        last_active_gid = the_gid
+                    }
+                }
+                // 需要刷新直到last_active_gid的下载状态
+                ans.push({
+                    downloadSpeed,
+                    uploadSpeed,
+                    numActive,
+                    numWaiting,
+                    numStopped,
+                    numTotal: gid_list.length,
+                    downloadFile,
+                })
+            }
+            // console.log(JSON.stringify(ans))
+            onAria2DownloadState(ans)
+        })
     }
 
     function getFreeTaskId() {
@@ -80,7 +151,17 @@ Pane {
             }
         }
         // console.log("file_urls:", JSON.stringify(file_urls))
-        DownloadM3u8.downloadTs(task_id, file_path, file_name, file_urls)
+        Aria2Util.downloadUri(file_path, file_name, file_urls, function(gid_list) {
+            // console.log(JSON.stringify(gid_list))
+            GlobalTaskList.addDownloadItem({
+                task_id,
+                file_path,
+                file_name,
+                m3u8,
+                file_urls,
+                gid_list,
+            })
+        })
         download_list.append({
             task_id,
             file_path,
@@ -89,14 +170,9 @@ Pane {
         })
     }
 
-    function onAria2DownloadState(arg) {
-        const { task_id, data } = arg
+    function onAria2DownloadState(data) {
         for (let i = 0; i < download_list.count; i++) {
-            let item = download_list.get(i)
-            if (item.task_id === arg.task_id) {
-                download_list.set(i, data)
-                break
-            }
+            download_list.set(i, data[i] ? data[i] : {})
         }
     }
 
@@ -148,18 +224,18 @@ Pane {
 
         // requestList()
         QtSignal.registerCallback(QtSignal.signalCmd.M3U8_DOWNLOAD_FINISHED, onM3u8DownloadFinished)
-        QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_STATE, onAria2DownloadState)
-        QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_PAUSE, onAria2DownloadPause)
-        QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_UNPAUSE, onAria2DownloadUnpause)
-        QtSignal.registerCallback(QtSignal.signalCmd.MAIN_DELETE_TASK, onMainDeleteTask)
+//        QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_STATE, onAria2DownloadState)
+//        QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_PAUSE, onAria2DownloadPause)
+//        QtSignal.registerCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_UNPAUSE, onAria2DownloadUnpause)
+//        QtSignal.registerCallback(QtSignal.signalCmd.MAIN_DELETE_TASK, onMainDeleteTask)
     }
 
     Component.onDestruction: {
         QtSignal.unregisterCallback(QtSignal.signalCmd.M3U8_DOWNLOAD_FINISHED, onM3u8DownloadFinished)
-        QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_STATE, onAria2DownloadState)
-        QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_PAUSE, onAria2DownloadPause)
-        QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_UNPAUSE, onAria2DownloadUnpause)
-        QtSignal.unregisterCallback(QtSignal.signalCmd.MAIN_DELETE_TASK, onMainDeleteTask)
+//        QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_STATE, onAria2DownloadState)
+//        QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_PAUSE, onAria2DownloadPause)
+//        QtSignal.unregisterCallback(QtSignal.signalCmd.ARIA2_DOWNLOAD_UNPAUSE, onAria2DownloadUnpause)
+//        QtSignal.unregisterCallback(QtSignal.signalCmd.MAIN_DELETE_TASK, onMainDeleteTask)
     }
 
     RowLayout {

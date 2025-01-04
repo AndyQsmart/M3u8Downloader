@@ -1,0 +1,6 @@
+python3.9
+
+pip install PySide2==5.15.2.1
+pip install requests==2.32.3
+pip install m3u8==6.0.0
+pip install pyinstaller==4.10 // 打包工具

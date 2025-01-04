@@ -1,8 +1,8 @@
-import QtQuick 2.13
+import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.15
 import "../../../common_component/MaterialUI"
-import "../../../common_js/Color.js" as Color
+import "../../../common_qml"
 
 MDialog {
     id: createPopup
@@ -42,9 +42,8 @@ MDialog {
                 height: 32
                 cursorShape: Qt.PointingHandCursor
 
-                MIcon {
-                    name: 'close'
-                    size: 20
+                MSvgIcon {
+                    name: 'Close'
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.horizontalCenter: parent.horizontalCenter
                 }
@@ -68,6 +67,7 @@ MDialog {
                 id: download_link
                 Layout.fillWidth: true
                 variant: 'outlined'
+                size: "small"
             }
         }
 
@@ -84,6 +84,7 @@ MDialog {
                 id: save_path
                 Layout.fillWidth: true
                 variant: 'outlined'
+                size: "small"
             }
 
             MDirectoryButton {
@@ -110,6 +111,7 @@ MDialog {
                 id: save_file
                 Layout.fillWidth: true
                 variant: 'outlined'
+                size: "small"
             }
         }
 

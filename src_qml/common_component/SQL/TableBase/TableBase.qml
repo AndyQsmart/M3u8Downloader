@@ -1,4 +1,4 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import "../../../common_component/SQL/QSQL"
 import "../TableFactory"
 
@@ -20,8 +20,24 @@ Item {
         return table_meta
     }
 
+    function getModel() {
+        return QSQL.db
+    }
+
+    // 查询得到的内容转js对象
+    function toObject(query) {
+        let ans = {
+            id: query.id,
+        }
+        for (let key in table_field) {
+            ans[key] = query[key]
+        }
+
+        return ans
+    }
+
     function create(arg) {
-        console.log(JSON.stringify(arg))
+        console.log("(TableBase.qml)create:", JSON.stringify(arg))
         let Table = table.getTable()
         let new_item = new Table(arg)
         QSQL.db.add(new_item)
@@ -30,6 +46,7 @@ Item {
     }
 
     function remove(item) {
+        console.log("(TableBase.qml)remove:", JSON.stringify(item))
         QSQL.db.remove(item)
     }
 

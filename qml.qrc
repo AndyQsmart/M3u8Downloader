@@ -20,18 +20,8 @@
         <file>src_qml/common_component/Timer/ExeOnceTimer/ExeOnceTimer.qml</file>
         <file>src_qml/common_component/Timer/OnceTimer/OnceTimer.qml</file>
         <file>src_qml/common_image/Icon/logo.png</file>
-        <file>src_qml/common_js/ComponentConfig.js</file>
-        <file>src_qml/common_resources/font/font_awesome/fontawesome-webfont.ttf</file>
-        <file>src_qml/common_resources/common_resources.qrc</file>
-        <file>src_qml/common_resources/gen_qrc_py.sh</file>
-        <file>src_qml/common_resources/rc_common_resources.py</file>
         <file>src_qml/instance_component/AboutDialog/AboutDialog.qml</file>
         <file>src_qml/instance_component/Navbar/Navbar.qml</file>
-        <file>src_qml/instance_component/SQLTable/SettingData/qmldir</file>
-        <file>src_qml/instance_component/SQLTable/SettingData/SettingData.qml</file>
-        <file>src_qml/instance_component/SQLTable/TableBase/TableBase.qml</file>
-        <file>src_qml/instance_component/SQLTable/TableFactory/qmldir</file>
-        <file>src_qml/instance_component/SQLTable/TableFactory/TableFactory.qml</file>
         <file>src_qml/instance_component/SystemTray/SystemTray.qml</file>
         <file>src_qml/pages/HomePage/HomePage.qml</file>
         <file>src_qml/common_component/MaterialUI/colors/Grey.qml</file>
@@ -50,9 +40,6 @@
         <file>src_qml/common_component/MaterialUI/Font/FontAwesomeFont.qml</file>
         <file>src_qml/common_component/MaterialUI/Font/IconsName.js</file>
         <file>src_qml/common_component/MaterialUI/Font/qmldir</file>
-        <file>src_qml/common_js/StringUtil.js</file>
-        <file>src_qml/common_js/Color.js</file>
-        <file>src_qml/common_js/Tools.js</file>
         <file>src_qml/common_component/MaterialUI/MButtonBase.qml</file>
         <file>src_qml/common_component/MaterialUI/MDirectoryButton.qml</file>
         <file>src_qml/common_component/MaterialUI/MFileButton.qml</file>
@@ -78,7 +65,6 @@
         <file>src_qml/common_component/MaterialUI/MIcon.qml</file>
         <file>src_qml/common_component/MaterialUI/MTimePicker.qml</file>
         <file>src_qml/common_component/MaterialUI/MToast.qml</file>
-        <file>src_qml/pages/TestPage/TestPage.qml</file>
         <file>src_qml/pages/HomePage/Component/CreateDialog.qml</file>
         <file>src_qml/common_component/MaterialUI/styles/MShadow.qml</file>
         <file>src_qml/common_component/MaterialUI/styles/Palette.qml</file>
@@ -96,5 +82,50 @@
         <file>src_qml/common_qml/qmldir</file>
         <file>src_qml/common_qml/Aria2Util.qml</file>
         <file>src_qml/common_qml/GlobalTaskList.qml</file>
+        <file>src_qml/common_component/MaterialUI/StyleComponent/MFilledInputStyle.qml</file>
+        <file>src_qml/common_component/MaterialUI/StyleComponent/MFramelessWindowButtonsMac.qml</file>
+        <file>src_qml/common_component/MaterialUI/StyleComponent/MFramelessWindowButtonsWin.qml</file>
+        <file>src_qml/common_component/MaterialUI/StyleComponent/MInputStyle.qml</file>
+        <file>src_qml/common_component/MaterialUI/StyleComponent/MOutlinedInputStyle.qml</file>
+        <file>src_qml/common_component/MaterialUI/StyleComponent/MWindowResizeHandler.qml</file>
+        <file>src_qml/common_component/MaterialUI/SvgIcon/FilledMap.js</file>
+        <file>src_qml/common_component/MaterialUI/SvgIcon/OutlinedMap.js</file>
+        <file>src_qml/common_component/MaterialUI/SvgIcon/RoundedMap.js</file>
+        <file>src_qml/common_component/MaterialUI/SvgIcon/SharpMap.js</file>
+        <file>src_qml/common_component/MaterialUI/SvgIcon/TwoToneMap.js</file>
+        <file>src_qml/common_component/MaterialUI/MAnimation.qml</file>
+        <file>src_qml/common_component/MaterialUI/MButtonGroup.qml</file>
+        <file>src_qml/common_component/MaterialUI/MCollapse.qml</file>
+        <file>src_qml/common_component/MaterialUI/MColorPicker.qml</file>
+        <file>src_qml/common_component/MaterialUI/MComplexSelect.qml</file>
+        <file>src_qml/common_component/MaterialUI/MCopyText.qml</file>
+        <file>src_qml/common_component/MaterialUI/MFilledInput.qml</file>
+        <file>src_qml/common_component/MaterialUI/MFormControlLabel.qml</file>
+        <file>src_qml/common_component/MaterialUI/MFramelessWindow.qml</file>
+        <file>src_qml/common_component/MaterialUI/MIconButton.qml</file>
+        <file>src_qml/common_component/MaterialUI/MInput.qml</file>
+        <file>src_qml/common_component/MaterialUI/MInputBase.qml</file>
+        <file>src_qml/common_component/MaterialUI/MMenuList.qml</file>
+        <file>src_qml/common_component/MaterialUI/MOutlinedInput.qml</file>
+        <file>src_qml/common_component/MaterialUI/MRadioGroup.qml</file>
+        <file>src_qml/common_component/MaterialUI/MRipple.qml</file>
+        <file>src_qml/common_component/MaterialUI/MScaleX.qml</file>
+        <file>src_qml/common_component/MaterialUI/MScaleY.qml</file>
+        <file>src_qml/common_component/MaterialUI/MSelectBase.qml</file>
+        <file>src_qml/common_component/MaterialUI/MSvgIcon.qml</file>
+        <file>src_qml/common_component/MaterialUI/MToolTip.qml</file>
+        <file>src_qml/common_component/MaterialUI/MTouchRipple.qml</file>
+        <file>src_qml/common_component/MaterialUI/MZoom.qml</file>
+        <file>src_qml/common_component/Timer/ExeOnceDuringTimer/ExeOnceDuringTimer.qml</file>
+        <file>src_qml/common_qml/Tools.qml</file>
+        <file>src_qml/common_qml/Color.qml</file>
+        <file>src_qml/common_qml/ComponentConfig.qml</file>
+        <file>src_qml/common_qml/StringUtil.qml</file>
+        <file>src_qml/common_component/SQL/TableBase/TableBase.qml</file>
+        <file>src_qml/common_component/SQL/TableFactory/qmldir</file>
+        <file>src_qml/common_component/SQL/TableFactory/TableFactory.qml</file>
+        <file>src_qml/instance_component/SQLTable/qmldir</file>
+        <file>src_qml/instance_component/SQLTable/SettingData.qml</file>
+        <file>src_qml/common_qml/Logger.qml</file>
     </qresource>
 </RCC>

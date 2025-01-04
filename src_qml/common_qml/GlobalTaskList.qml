@@ -6,7 +6,10 @@ import QtQuick.Controls 2.15
 Item {
     property var download_list: ListModel {
         // const { download_link, file_name, file_path, m3u8, file_urls, pause, downloadFile } = item
-        // const { gid, uri, out, status } = downloadFile
+        // const { url } = file_path[index]
+        // const { gid, uri, out, status } = downloadFile[index]
+        // const { base_uri, base_path, files } = m3u8
+        // const { file } = files
         dynamicRoles: true
     }
     property var history_list: ListModel {

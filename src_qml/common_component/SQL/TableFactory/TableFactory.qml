@@ -1,7 +1,7 @@
 pragma Singleton
 
-import QtQuick 2.0
-import "../../../common_component/SQL/QSQL"
+import QtQuick 2.15
+import "../QSQL"
 
 Item {
     property bool is_connect: false
@@ -10,10 +10,10 @@ Item {
     function connect() {
         if (!is_connect) {
             QSQL.connect({
-                 identifier: "QSQL",
-                 version: "1.0",
-                 description: "QSQL is a curd layer lib",
-                 estimatedSize: 1000000,
+                identifier: "QSQL",
+                version: "1.0",
+                description: "QSQL is a curd layer lib",
+                estimatedSize: 1000000,
             })
             is_connect = true
         }

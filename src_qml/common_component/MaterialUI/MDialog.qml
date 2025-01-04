@@ -1,9 +1,7 @@
-import QtQuick 2.13
+import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.4
 import "./styles"
 import "./colors"
-
 
 Popup {
     id: dialog
@@ -11,10 +9,26 @@ Popup {
     property bool fullWidth: false
     property bool disableBackdropClick: false
     property string maxWidth: 'sm' //'lg' 'md' 'sm' 'xl' 'xs' false
-    property Item transitionComponent: null
+    property MAnimation transitionComponent: MFade { }
+    parent: Overlay.overlay
+//    anchors.centerIn: parent // 为了使用通用动画，故不使用该属性进行居中
+
+    Binding {
+        target: transitionComponent
+        property: "originX"
+        value: ((parent ? parent.width : 0) - dialog.width)/2
+    }
+
+    Binding {
+        target: transitionComponent
+        property: "originY"
+        value: ((parent ? parent.height : 0) - dialog.height)/2
+    }
 
     x: ((parent ? parent.width : 0) - dialog.width)/2
     y: ((parent ? parent.height : 0) - dialog.height)/2
+
+
     padding: 0
     visible: false
     modal: true
@@ -25,21 +39,6 @@ Popup {
         elevation: 24
     }
 
-    enter: {
-        if (transitionComponent) {
-            return transitionComponent.enter
-        }
-        else {
-            return null
-        }
-    }
-
-    exit: {
-        if (transitionComponent) {
-            return transitionComponent.exit
-        }
-        else {
-            return null
-        }
-    }
+    enter: transitionComponent ? transitionComponent.enter : null
+    exit: transitionComponent ? transitionComponent.exit : null
 }

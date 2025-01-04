@@ -3,17 +3,15 @@ import QtQuick.Window 2.13
 import QtQuick.Controls.Material 2.0
 import QtQuick.Controls 2.15
 import Qt.labs.platform 1.1
-import "./common_js/Color.js" as Color
 import "./common_component/Route"
 import "./common_component/MaterialUI"
 import "./common_component/Signal/QtSignal"
 import "./common_qml"
-import "./instance_component/SQLTable/SettingData"
+import "./instance_component/SQLTable"
 import "./instance_component/SystemTray"
 import "./pages/HomePage"
-import "./pages/TestPage"
 
-Window {
+MFramelessWindow {
     id: mainWindow
     width: 900
     height: 600
@@ -28,30 +26,39 @@ Window {
 //        console.log(JSON.stringify(data))
     }
 
+    function backupRoute() {
+        let route_stack = Route.getStack()
+        console.log("(main.qml)Save route", JSON.stringify(route_stack))
+        SettingData.setValue('RouteStack', route_stack)
+    }
+
+    function quitApp() {
+        try {
+            backupRoute()
+        }
+        catch (e) {
+            console.log("main.backupRoute error", e)
+        }
+        console.log("quitApp:start shutdown aria2")
+        Aria2Util.shutdown(function (res) {
+            console.log(res)
+            Qt.exit(0)
+        })
+    }
+
     function onAppEvent(data) {
         const { event_name, event_data } = data
         if (event_name === "MAC_ApplicationActive") {
-            mainWindow.show()
+            mainWindow.visible = true
         }
         else if (event_name === "MAC_Quit") {
             quitApp()
         }
     }
 
-    function quitApp() {
-        console.log("quitApp:start shutdown aria2")
-        Aria2Util.shutdown(function (res) {
-            console.log(res)
-            Qt.quit()
-        })
-    }
-
     // 可能是qmltype信息不全，有M16警告，这里屏蔽下
     // @disable-check M16
     onClosing: function(closeevent) {
-        let route_stack = Route.getStack()
-        console.log("(main.qml)Save route", JSON.stringify(route_stack))
-        SettingData.setValue('RouteStack', route_stack)
         mainWindow.hide()
 //        CloseEvent的accepted设置为false就能忽略该事件
         closeevent.accepted = false
@@ -68,6 +75,9 @@ Window {
         initialItem: home_page
 
         Component.onCompleted: {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> main.onCompleted start")
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>")
             QMLSignal.qmlSignal.connect(onQtSignal)
             QtSignal.registerCallback(QtSignal.signalCmd.APP_EVENT, onAppEvent)
             Aria2Util.init()
@@ -83,24 +93,25 @@ Window {
 
                 Route.setStack(value)
 
-                stackView.pop()
+                stackView.clear()
+
                 for (let i = 0; i < value.length; i++) {
                     let url = value[i].url
-                    console.log(url)
+                    console.log('(main.qml)Recover', i, url)
                     stackView.push(route_map[url], StackView.Immediate)
                 }
             })
+
+            console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+            console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<")
+            console.log("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< main.onCompleted end")
+            Logger.logTime("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< main.onCompleted end")
         }
     }
 
     Component {
         id: home_page
         HomePage { }
-    }
-
-    Component {
-        id: test_page
-        TestPage { }
     }
 
     property var route_map: {
@@ -134,7 +145,7 @@ Window {
 
     SystemTray {
         onShowWindow: {
-            mainWindow.show()
+            mainWindow.visible = true
             mainWindow.requestActivate()
         }
 

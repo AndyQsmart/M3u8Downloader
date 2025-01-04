@@ -1,4 +1,10 @@
 // qmldir
+singleton Color 1.0 Color.qml
+singleton ComponentConfig 1.0 ComponentConfig.qml
+singleton StringUtil 1.0 StringUtil.qml
+singleton Tools 1.0 Tools.qml
+singleton Logger 1.0 Logger.qml
+
 singleton QHttp 1.0 QHttp.qml
 singleton Aria2Util 1.0 Aria2Util.qml
 singleton GlobalTaskList 1.0 GlobalTaskList.qml

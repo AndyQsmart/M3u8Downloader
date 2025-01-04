@@ -1,11 +1,11 @@
-import QtQuick 2.13
+import QtQuick 2.15
 import "./styles"
 import "./colors"
 
 // 原版
 MButtonBase {
     id: button
-    property string color: 'default' // 'default' 'inherit' 'primary' 'secondary'
+    property string color: 'default' // 'default' ''primary' 'secondary' color
     disabled: false
     property string size: 'medium' // 'large' 'medium' 'small'
     // property bool fullWidth: false
@@ -119,9 +119,15 @@ MButtonBase {
                 return Colors.alpha('#000000', 0.23)
             }
         }
-        radius: 4
+        radius: Palette.borderRadius
         color: {
             let ans = ''
+
+            if (disabled) {
+                if (variant == 'contained') {
+                    return Palette.lightActionDisabledBackground
+                }
+            }
 
             if (button.hovered) {
                 ans = Colors.alpha('#000000', 0.04)

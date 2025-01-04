@@ -1,12 +1,12 @@
-import QtQuick 2.13
+import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.15
 import "../../../common_component/MaterialUI"
-import "../../../common_js/Color.js" as Color
+import "../../../common_qml"
 
 Rectangle {
     property var itemData: ({})
-    property bool pause: false
+    property string status: itemData && itemData.status ? itemData.status : "waiting"
 
     function byteToStr(totalByte) {
         if (totalByte < 1024) {
@@ -43,7 +43,7 @@ Rectangle {
 
             MTypography {
                 width: parent.width
-                text: itemData && itemData.file ? itemData.file : ""
+                text: itemData && itemData.out ? itemData.out : ""
             }
         }
 
@@ -56,6 +56,16 @@ Rectangle {
                 anchors.left: parent.left
                 width: parent.width/3
                 text: {
+                    if (status === "waiting") {
+                        return "等待下载"
+                    }
+                    if (status === "error") {
+                        return "下载错误"
+                    }
+                    if (status === "removed") {
+                        return "已删除"
+                    }
+
                     let totalByte = itemData && itemData.totalLength ? itemData.totalLength : 0
                     return byteToStr(totalByte)
                 }
@@ -65,7 +75,7 @@ Rectangle {
                 anchors.left: total_size.right
                 width: parent.width/3
                 text: {
-                    if (pause) {
+                    if (status !== "active") {
                         return ""
                     }
 
@@ -78,6 +88,19 @@ Rectangle {
                 anchors.right: parent.right
                 width: parent.width/3
                 text: {
+                    if (status === "waiting") {
+                        return ""
+                    }
+                    if (status === "complete") {
+                        return "100%"
+                    }
+                    if (status === "error") {
+                        return ""
+                    }
+                    if (status === "removed") {
+                        return ""
+                    }
+
                     let completedLength = itemData && itemData.completedLength ? itemData.completedLength : 0
                     let totalByte = itemData && itemData.totalLength ? itemData.totalLength : 1
                     return `${(completedLength/totalByte*100).toFixed(2)}%`

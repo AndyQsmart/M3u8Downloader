@@ -2,7 +2,7 @@ import QtQuick 2.13
 import QtQuick.Controls.Material 2.0
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.11
-import "../../common_js/Color.js" as Color
+import "../../common_qml"
 import "../../common_component/MaterialUI"
 import "../../common_component/Route"
 import "../../instance_component/AboutDialog"
@@ -23,7 +23,7 @@ Pane {
         ColumnLayout {
             anchors.fill: parent
             anchors.bottomMargin: 10
-            anchors.topMargin: 10
+            anchors.topMargin:  Qt.platform.os === 'osx' ? 10+28 : 10
 
             MListItem {
                 id: button_task_list
@@ -95,7 +95,5 @@ Pane {
 
     AboutDialog {
         id: aboutDialog
-        x: (parent.parent.parent.width-aboutDialog.width)/2
-        y: (parent.parent.parent.height-aboutDialog.height)/2
     }
 }

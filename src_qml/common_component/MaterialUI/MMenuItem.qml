@@ -1,6 +1,4 @@
-import QtQuick 2.13
-import QtQuick.Controls.Material 2.0
-import QtQuick.Controls 2.15
+import QtQuick 2.15
 import "./styles"
 
 MButton {
@@ -25,6 +23,12 @@ MButton {
     rightPadding: m_padding[1]
     bottomPadding: m_padding[2]
     leftPadding: m_padding[3]
+
+    contentItem: MTypography {
+        variant: 'body1'
+        text: list_item.text
+        color: list_item.textColor
+    }
 
     background: Rectangle {
         color: {

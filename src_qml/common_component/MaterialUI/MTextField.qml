@@ -1,81 +1,50 @@
-import QtQuick 2.13
+import QtQuick 2.15
+import "./StyleComponent"
 import "./styles"
 
-TextInput {
-    id: textInput
+MInputBase {
+    id: root
     property string variant: 'standard' // 'filled' | 'outlined' | 'standard'
-    property string color: 'primary'
-    property string placeholder: ''
-    property string _main_color: Palette.string2Color('primary', Palette.primaryMain)
-    property var _padding: {
-        if (variant === 'outlined') {
-            return [10, 10, 10, 10]
-        }
-        else {
-            return [5, 0, 5, 0]
-        }
-    }
 
-    verticalAlignment: Text.AlignVCenter
-    clip: true
-    selectByMouse: true
-    selectionColor: textInput._main_color
-    topPadding: _padding[0]
-    rightPadding: _padding[1]
-    bottomPadding: _padding[2]
-    leftPadding: _padding[3]
+    _padding: loader.item ? loader.item.padding : []
 
-    font.pointSize: TypographyStyle.fontStyleList.body2.size
-
-    // outlined外边框
-    Repeater {
-        model: variant === 'outlined' ? 1 : 0
-        delegate: Rectangle {
-            z: -1
-            anchors.fill: parent
-            enabled: false
-            radius: 5
-            border.width: textInput.activeFocus ? 2 : 1
-            border.color: textInput.activeFocus ? textInput._main_color : '#3B000000'
-            color: Colors.commonTransparent
-        }
-    }
-
-    // 下划线
-    Repeater {
-        id: repeater
-        model: variant !== 'outlined' ? 1 : 0
-        delegate: Rectangle {
-            z: -1
-            width: textInput.width
-            height: textInput.activeFocus ? 2 : 1
-            anchors.bottom: parent.bottom
-            enabled: false
-            color: textInput.activeFocus ? textInput._main_color : '#3B000000'
-        }
-    }
-
-    // placeholder
-    Text {
-        visible: textInput.text ? false : true
+    Loader {
+        id: loader
+        sourceComponent: variant === 'outlined' ? outlined_style : (variant === 'filled' ? filled_style : standard_style)
         anchors.fill: parent
-        verticalAlignment: Text.AlignVCenter
-        leftPadding: {
-            if (variant === 'outlined') {
-                return 10
-            }
-            else {
-                return 0
-            }
-        }
-        text: placeholder
-        color: Palette.lightTextSecondary
-        font.pointSize: TypographyStyle.fontStyleList.body2.size
+        z: -1
     }
 
-    MouseArea {
-        cursorShape: Qt.IBeamCursor
-        anchors.fill: parent
-        enabled: false
+    Component {
+        id: standard_style
+        MInputStyle {
+            size: root.size
+            disabled: root.disabled
+            hover: root.hover
+            active: root.activeFocus
+            color: root.color
+        }
+    }
+
+    Component {
+        id: outlined_style
+        MOutlinedInputStyle {
+            size: root.size
+            disabled: root.disabled
+            hover: root.hover
+            active: root.activeFocus
+            color: root.color
+        }
+    }
+
+    Component {
+        id: filled_style
+        MFilledInputStyle {
+            size: root.size
+            disabled: root.disabled
+            hover: root.hover
+            active: root.activeFocus
+            color: root.color
+        }
     }
 }

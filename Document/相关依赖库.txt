@@ -1,0 +1,7 @@
+aria2:
+文档: https://aria2.github.io/manual/en/html/index.html
+github: https://github.com/aria2/aria2
+
+ffmpeg:
+官网: https://ffmpeg.org/
+github: https://github.com/FFmpeg/FFmpeg

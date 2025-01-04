@@ -1,13 +1,13 @@
-import QtQuick 2.13
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.4
+import QtQuick 2.15
 import "./styles"
 import "./colors"
 
-Item {
-    property int timeout: 225
+MAnimation {
+    id: control
+    timeout: 225
 
-    property Transition enter: Transition {
+    enter: Transition {
+        to: "enter"
         NumberAnimation {
             duration: timeout
             property: "opacity"
@@ -16,14 +16,29 @@ Item {
             to: 1.0
         }
     }
+    enterState: State {
+        name: "enter"
+        PropertyChanges {
+            target: control.target
+            opacity: 1
+        }
+    }
 
-    property Transition exit: Transition {
+    exit: Transition {
+        to: "exit"
         NumberAnimation {
             duration: timeout
             property: "opacity"
             easing.type: Easing.InOutQuad
             from: 1.0
             to: 0.0
+        }
+    }
+    exitState: State {
+        name: "exit"
+        PropertyChanges {
+            target: control.target
+            opacity: 0
         }
     }
 }

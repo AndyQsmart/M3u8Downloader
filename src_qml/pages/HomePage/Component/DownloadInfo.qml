@@ -1,8 +1,8 @@
-import QtQuick 2.13
+import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.15
 import "../../../common_component/MaterialUI"
-import "../../../common_js/Color.js" as Color
+import "../../../common_qml"
 
 Rectangle {
     id: container
@@ -32,7 +32,7 @@ Rectangle {
 
             ListView {
                 id: file_view
-                property int item_height: 80
+                property int item_height: 50
                 anchors.fill: parent
                 anchors.margins: 10
                 model: downloadFile
@@ -40,7 +40,6 @@ Rectangle {
                 delegate: DownloadInfoFileItem {
                     width: file_view.width
                     height: file_view.item_height
-                    pause: container.pause
                     itemData: {
                         if (!downloadFile) {
                             return {}

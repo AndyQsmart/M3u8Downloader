@@ -1,14 +1,16 @@
 pragma Singleton
 
-import QtQuick 2.0
-import QtQuick.LocalStorage 2.0
+import QtQuick 2.15
+import QtQuick.LocalStorage 2.15
 import "./persistence.js" as Persistence
 import "./persistence.store.sql.js" as PersistenceStoreSql
 
 QtObject {
     id: qsql
     property var connection: null
-    property var db: {
+    property var db: null
+
+    Component.onCompleted: {
         var the_db = Persistence.createPersistence()
 
         the_db.transaction = function (callback) {
@@ -54,7 +56,7 @@ QtObject {
         the_db.store.sql.config(the_db, sqliteDialect)
         the_db.save = the_db.flush
 
-        return the_db
+        qsql.db = the_db
     }
 
     function connect(arg) {

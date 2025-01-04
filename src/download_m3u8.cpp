@@ -26,7 +26,9 @@ void DownloadM3u8::download(QVariant download_link, QVariant file_path, QVariant
         QStringList files = m3u8->files;
         QList<QVariant> files_arg;
         for (int i = 0 ; i < files.size(); i++) {
-            files_arg.append(files[i]);
+            QMap<QString, QVariant> file_item;
+            file_item["file"] = files[i];
+            files_arg.append(file_item);
         }
         m3u8_arg["files"] = files_arg;
         m3u8_arg["base_uri"] = m3u8->base_uri();

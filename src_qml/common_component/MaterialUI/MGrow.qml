@@ -1,13 +1,14 @@
-import QtQuick 2.13
-import QtQuick.Controls 2.15
-import QtQuick.Controls.Styles 1.4
+import QtQuick 2.15
 import "./styles"
 import "./colors"
 
-Item {
-    property int timeout: 242
+MAnimation {
+    id: control
+    timeout: 242
+    property int transformOrigin: Item.Center // Item.Center Item.BottomRight Item.TopLeft ...
 
-    property Transition enter: Transition {
+    enter: Transition {
+        to: "enter"
         NumberAnimation {
             duration: timeout
             property: "opacity"
@@ -25,11 +26,21 @@ Item {
         PropertyAnimation {
             duration: 0
             property: "transformOrigin"
-            to: Item.TopLeft
+            to: transformOrigin
+        }
+    }
+    enterState: State {
+        name: "enter"
+        PropertyChanges {
+            target: control.target
+            opacity: 1
+            scale: 1
+            transformOrigin: transformOrigin
         }
     }
 
-    property Transition exit: Transition {
+    exit: Transition {
+        to: "exit"
         NumberAnimation {
             duration: timeout
             property: "opacity"
@@ -47,7 +58,16 @@ Item {
         PropertyAnimation {
             duration: 0
             property: "transformOrigin"
-            to: Item.TopLeft
+            to: transformOrigin
+        }
+    }
+    exitState: State {
+        name: "exit"
+        PropertyChanges {
+            target: control.target
+            opacity: 0
+            scale: 0
+            transformOrigin: transformOrigin
         }
     }
 }

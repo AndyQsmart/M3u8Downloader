@@ -1,8 +1,7 @@
 pragma Singleton
 
-import QtQuick 2.0
-import "../TableBase"
-import "../../../common_js/Tools.js" as Tools
+import QtQuick 2.15
+import "../../common_component/SQL/TableBase"
 
 TableBase {
     table_name: 'SettingData'
@@ -13,24 +12,25 @@ TableBase {
 
     function getValue(name, callback) {
         let query = getTable().all().filter('name', '=', name)
-        query.list(null, (data)=>{
+        query.list(null, function (data) {
             if (data.length === 0) {
                 callback(null)
             }
             else {
+                let res_data = null
                 try {
-                    callback(JSON.parse(data[0].value))
+                    res_data = JSON.parse(data[0].value)
                 }
                 catch (e) {
-                    callback(null)
                 }
+                callback(res_data)
             }
         })
     }
 
     function setValue(name, value) {
         let query = getTable().all().filter('name', '=', name)
-        query.list(null, (data)=>{
+        query.list(null, function (data) {
             if (data.length === 0) {
                 create({
                     name,

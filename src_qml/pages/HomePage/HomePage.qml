@@ -1,7 +1,6 @@
-import QtQuick 2.13
+import QtQuick 2.15
 import QtQuick.Controls 2.15
-import QtQuick.Controls.Material 2.0
-import QtQuick.Layouts 1.11
+import QtQuick.Layouts 1.15
 import "../../common_component/MaterialUI"
 import "../../common_component/Route"
 import "../../common_component/Signal/QtSignal"
@@ -9,8 +8,6 @@ import "../../common_qml"
 import "../../instance_component/Navbar"
 import "./Component"
 import "./View"
-import "../../common_js/Color.js" as Color
-import "../../common_js/Tools.js" as Tools
 
 Pane {
     id: container
@@ -40,22 +37,28 @@ Pane {
         // console.log("m3u8.files:", JSON.stringify(m3u8))
 
         let file_urls = []
+        let file_urls_arg = []
         for (let i = 0; i < files.length; i++) {
-            let item = files[i]
+            let item = files[i].file
+            let the_file_url = ""
             if (item.indexOf("http://") !== 0 && item.indexOf("https://") !== 0) {
                 if (base_uri[base_uri.length-1] === "/") {
-                    file_urls.push(`${base_uri}${item}`)
+                    the_file_url = `${base_uri}${item}`
                 }
                 else {
-                    file_urls.push(`${base_uri}/${item}`)
+                    the_file_url = `${base_uri}/${item}`
                 }
             }
             else {
-                file_urls.push(item)
+                the_file_url = item
             }
+            file_urls_arg.push(the_file_url)
+            file_urls.push({
+                url: the_file_url,
+            })
         }
         // console.log("file_urls:", JSON.stringify(file_urls))
-        Aria2Util.downloadUri(file_path, file_name, file_urls, function(downloadFile) {
+        Aria2Util.downloadUri(file_path, file_name, file_urls_arg, function(downloadFile) {
             // console.log(JSON.stringify(gid_list))
             GlobalTaskList.addDownloadItem({
                 download_link,
@@ -157,7 +160,7 @@ Pane {
                         MButton {
                             variant: 'outlined'
                             text: qsTr("新建")
-                            color: Color.text_secondary
+                            textColor: "textSecondary"
                             ToolTip.text: qsTr("新建下载任务")
                             ToolTip.visible: hovered
                             ToolTip.timeout: 3000

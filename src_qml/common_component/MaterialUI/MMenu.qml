@@ -1,9 +1,10 @@
-import QtQuick 2.13
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.11
+import QtQuick 2.15
 import "./styles"
 
 MPopover {
-    topPadding: Palette.unit
-    bottomPadding: Palette.unit
+    default property alias children: menu_list.children
+
+    MMenuList {
+        id: menu_list
+    }
 }
